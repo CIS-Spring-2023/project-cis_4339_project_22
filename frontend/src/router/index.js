@@ -40,6 +40,11 @@ const routes = [
     props: true,
     component: () => import('../components/eventDetails.vue')
   },
+  {//added user login page component
+    path: '/userlogin',
+    name: 'userlogin',
+    component: () => import('../components/userLogin.vue')
+  },
   // Added a path to a newly added tab: findServices.vue
   {
     path: '/findservices',
