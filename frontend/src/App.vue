@@ -6,7 +6,8 @@ export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      // Changed orgName from Dataplatform to Group 22.
+      orgName: 'Group 22'
     }
   },
   created() {
@@ -75,6 +76,19 @@ export default {
                 Find Event
               </router-link>
             </li>
+
+            <!-- Installed Language Features to see code in color. Added a Find Services tab -->
+            <li>
+              <router-link to="/findservices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >search</span
+                >
+                Find Services
+              </router-link>
+            </li>
+
           </ul>
         </nav>
       </header>

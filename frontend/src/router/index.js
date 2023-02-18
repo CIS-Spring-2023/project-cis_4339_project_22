@@ -39,6 +39,12 @@ const routes = [
     name: 'eventdetails',
     props: true,
     component: () => import('../components/eventDetails.vue')
+  },
+  // Added a path to a newly added tab: findServices.vue
+  {
+    path: '/findservices',
+    name: 'findservices',
+    component: () => import('../components/findServices.vue')
   }
 ]
 const router = createRouter({
