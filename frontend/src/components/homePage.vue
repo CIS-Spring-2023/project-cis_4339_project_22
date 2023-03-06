@@ -42,7 +42,7 @@ const myChart = new Chart(ctx, {
   data: data,
 });
 
-myChart;
+myChart; //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
   },
 
   methods: {
