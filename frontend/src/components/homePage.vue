@@ -18,13 +18,14 @@ export default {
       error: null
     }
   },
+  //config and set up for piechart from https://www.chartjs.org/docs/latest/charts/doughnut.html
   mounted() {
     this.getAttendanceData()
     console.log('Component mounted.')
     const ctx = document.getElementById('myChart');
 
     const data = {
-      labels: ['Red','Blue','Yellow'],
+      labels: ['77005','77401','77094'],
     datasets: [{
       label: 'My First Dataset',
       data: [300, 50, 100],
@@ -36,7 +37,6 @@ export default {
     hoverOffset: 4
   }]
 };
-
 const myChart = new Chart(ctx, {
   type: 'doughnut',
   data: data,
