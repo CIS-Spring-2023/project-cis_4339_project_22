@@ -37,6 +37,7 @@ export default {
     hoverOffset: 4
   }]
 };
+Chart.defaults.font.size = 20; //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
 const myChart = new Chart(ctx, {
   type: 'doughnut',
   data: data,
@@ -144,7 +145,7 @@ myChart; //method to fix "myChart is assigned but never used", from user Simon S
                 Loading...
               </p>
             </div>
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <canvas id="myChart" width="450" height="450"></canvas>
             <!-- End of loading animation -->
 
             <!-- Start of error alert -->
