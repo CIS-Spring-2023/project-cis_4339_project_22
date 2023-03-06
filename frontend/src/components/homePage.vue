@@ -20,6 +20,7 @@ export default {
   },
   mounted() {
     this.getAttendanceData()
+    console.log('Component mounted.')
   },
   methods: {
     async getAttendanceData() {
@@ -125,13 +126,13 @@ export default {
             <!-- Start of error alert -->
             <!-- This portion of the code will be commented out for Spring 2 due to backend not being connected-->
             <!-- <div class="mt-12 bg-red-50" v-if="error"> -->
-              <!-- <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800"> -->
-                <!-- {{ error.title }} -->
-              <!-- </h3> -->
-              <!-- <p class="p-4 text-lg font-bold text-red-900"> -->
-                <!-- {{ error.message }} -->
+            <!-- <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800"> -->
+            <!-- {{ error.title }} -->
+            <!-- </h3> -->
+            <!-- <p class="p-4 text-lg font-bold text-red-900"> -->
+            <!-- {{ error.message }} -->
             <!-- </p> -->
-           <!-- </div> -->
+            <!-- </div> -->
             <!-- End of error alert -->
           </div>
         </div>
