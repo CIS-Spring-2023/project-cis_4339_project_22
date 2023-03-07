@@ -25,25 +25,30 @@ export default {
     const ctx = document.getElementById('myChart');
 
     const data = {
-      labels: ['77005','77401','77094'],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
-Chart.defaults.font.size = 20; //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
-const myChart = new Chart(ctx, {
-  type: 'doughnut',
-  data: data,
-});
+      labels: ['77005', '77401', '77094'],
+      datasets: [
+        {
+          label: 'My First Dataset',
+          data: [300, 50, 100],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }
+      ]
+    };
+    Chart.defaults.font.size = 20; //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
+    const myChart = new Chart(ctx, {
+      type: 'pie',
+      data: data,
+      options: {
+        maintainAspectRatio: false
+      }
+    });
 
-myChart; //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
+    myChart; //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
   },
 
   methods: {
@@ -130,13 +135,16 @@ myChart; //method to fix "myChart is assigned but never used", from user Simon S
               </tr>
             </tbody>
           </table>
+          <!--canvas chart element-->
+          <div>
+            <canvas id="myChart" width="250" height="250"></canvas>
+          </div>
           <div>
             <AttendanceChart
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
             ></AttendanceChart>
-
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
               <p
@@ -145,9 +153,7 @@ myChart; //method to fix "myChart is assigned but never used", from user Simon S
                 Loading...
               </p>
             </div>
-            <canvas id="myChart" width="450" height="450"></canvas>
             <!-- End of loading animation -->
-
             <!-- Start of error alert -->
             <!-- This portion of the code will be commented out for Spring 2 due to backend not being connected-->
             <!-- <div class="mt-12 bg-red-50" v-if="error"> -->
