@@ -25,15 +25,17 @@ export default {
     const ctx = document.getElementById('myChart');
 
     const data = {
-      labels: ['77005', '77401', '77094'],
+      labels: ['77005', '77401', '77094', '77388', '77494', '77449', '77084'],
       datasets: [
         {
           label: 'My First Dataset',
-          data: [300, 50, 100],
+          data: [11, 4, 14, 3, 9],
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
+            'rgb(255, 99, 100)',
+            'rgb(151, 33, 210)',
+            'rgb(255, 199, 0)',
+            'rgb(33, 210, 68)',
+            'rgb(33, 39, 210)'
           ],
           hoverOffset: 4
         }
@@ -135,9 +137,12 @@ export default {
               </tr>
             </tbody>
           </table>
+          <!-- breaks added to add more distance between chart and table -->
+          <br>
+          <br>
           <!--canvas chart element-->
           <div>
-            <canvas id="myChart" width="250" height="250"></canvas>
+            <canvas id="myChart" width="500" height="500"></canvas>
           </div>
           <div>
             <AttendanceChart
