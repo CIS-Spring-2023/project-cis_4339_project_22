@@ -46,6 +46,19 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
+
+            <!-- Added Create Service page -->
+            <li>
+              <router-link to="/addservice">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >add</span
+                >
+                Add Service
+              </router-link>
+            </li>
+
             <li>
               <router-link to="/eventform">
                 <span
@@ -90,13 +103,13 @@ export default {
 
             <!-- Installed Language Features to see code in color. Added a Find Services tab -->
             <li>
-              <router-link to="/findservices">
+              <router-link to="/servicelist">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >search</span
+                  >format_list_bulleted</span
                 >
-                Find Services
+                List of Services
               </router-link>
             </li>
 
@@ -109,6 +122,7 @@ export default {
         class="justify-end items-center h-24 flex"
         style="background: linear-gradient(250deg, #c8102e 70%, #efecec 50.6%)"
       >
+
         <h1 class="mr-20 text-3xl text-white">{{ this.orgName }}</h1>
       </section>
       <div>

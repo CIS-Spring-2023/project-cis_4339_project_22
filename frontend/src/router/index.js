@@ -13,6 +13,13 @@ const routes = [
     props: true,
     component: () => import('../components/intakeForm.vue')
   },
+  // Added a path to addService.vue page
+  {
+    path: '/addservice',
+    name: 'addservice',
+    props: true,
+    component: () => import('../components/addService.vue')
+  },
   {
     path: '/findclient',
     name: 'findclient',
@@ -45,11 +52,11 @@ const routes = [
     name: 'userlogin',
     component: () => import('../components/userLogin.vue')
   },
-  // Added a path to a newly added tab: findServices.vue
+  // Added a path to serviceList.vue page
   {
-    path: '/findservices',
-    name: 'findservices',
-    component: () => import('../components/findServices.vue')
+    path: '/servicelist',
+    name: 'servicelist',
+    component: () => import('../components/serviceList.vue')
   }
 ]
 const router = createRouter({
