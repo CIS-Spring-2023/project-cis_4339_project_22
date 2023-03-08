@@ -76,17 +76,6 @@ export default {
                 Find Event
               </router-link>
             </li>
-            <li>
-              <!--added user login page -->
-              <router-link to="/userlogin">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >login</span
-                >
-                UserLogin
-              </router-link>
-            </li>
 
             <!-- Installed Language Features to see code in color. Added a Find Services tab -->
             <li>
