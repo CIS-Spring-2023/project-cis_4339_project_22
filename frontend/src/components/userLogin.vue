@@ -1,12 +1,28 @@
 <script>
+import { userLoginState } from "@/store/userInfo";
+
 export default {
   data() {
     return {
-        username: '',
-        password: ''
+      username: '',
+      password: '',
+      loginError: false
     }
   },
+  setup() {
+    const user = userLoginState();
+    return {user};
+  },
   methods:{
+    login() {
+      if (this.username == "username" && this.password == "password") { //username and password
+        this.user.login();
+        this.$router.push("/");
+      }
+      else {
+        this.loginError = true;
+      }
+    }
   }
 }
 </script>
@@ -27,7 +43,7 @@ export default {
             <input
                 type="text"
                 class="mb-6 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="user.username"
+                v-model="username"
               />
           </label>
           <!-- input 2 -->
@@ -37,9 +53,11 @@ export default {
             <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="user.password"
+                v-model="password"
               />
           </label>
+          <!--login error message-->
+          <div v-if="loginError" style="color: #ff0000">Incorrect Login. Hint: username = "username", password = "password"</div>
           <!-- submit button -->
           <div class="mt-10">
             <button class="bg-red-700 text-white rounded" type="submit" v-on:click="login">
