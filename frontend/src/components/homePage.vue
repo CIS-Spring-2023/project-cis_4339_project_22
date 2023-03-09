@@ -46,7 +46,7 @@ export default {
       type: 'pie',
       data: data,
       options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false //option to prevent chart size from changing
       }
     });
 
@@ -142,6 +142,7 @@ export default {
           <br>
           <!--canvas chart element-->
           <div>
+            <!--Set width and height to 500-->
             <canvas id="myChart" width="500" height="500"></canvas>
           </div>
           <div>
