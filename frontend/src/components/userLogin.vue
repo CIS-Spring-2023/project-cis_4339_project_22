@@ -15,11 +15,8 @@ export default {
   },
   methods:{
     login() {
-      if (this.username == "username" && this.password == "password") { //username and password
-        this.user.login();
-        this.$router.push("/");
-      }
-      else {
+      const loginSuccess = this.user.login(this.username, this.password);
+      if (!loginSuccess) { //login error
         this.loginError = true;
       }
     }
@@ -57,7 +54,7 @@ export default {
               />
           </label>
           <!--login error message-->
-          <div v-if="loginError" style="color: #ff0000">Incorrect Login. Hint: username = "username", password = "password"</div>
+          <div v-if="loginError" style="color: #ff0000">Incorrect Login. <br> Hint: username = "username", password = "password" for editor role. <br> username = "username2", password = "password2" for viewer role</div>
           <!-- submit button -->
           <div class="mt-10">
             <button class="bg-red-700 text-white rounded" type="submit" v-on:click="login">
