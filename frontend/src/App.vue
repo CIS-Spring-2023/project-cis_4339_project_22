@@ -106,7 +106,7 @@ export default {
             </li>
 
             <!-- Installed Language Features to see code in color. Added a Find Services tab -->
-            <li>
+            <li v-if="user.isLoggedIn">
               <router-link to="/servicelist">
                 <span
                   style="position: relative; top: 6px"
