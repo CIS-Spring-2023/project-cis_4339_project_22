@@ -54,7 +54,6 @@ export default {
           <thead class="bg-gray-50 text-xl">
             <tr>
               <th class="p-4 text-left">Title</th>
-              <th class="p-4 text-left">Status</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
@@ -64,7 +63,6 @@ export default {
               :key="service._id"
             >
               <td class="p-2 text-left">{{ service.title }}</td>
-              <td class="p-2 text-left">{{ service.status }}</td>
             </tr>
           </tbody>
         </table>
