@@ -47,6 +47,12 @@ const routes = [
     props: true,
     component: () => import('../components/eventDetails.vue')
   },
+  // Added a path to userLogin.vue
+  {
+    path: '/userlogin',
+    name: 'userlogin',
+    component: () => import('../components/userLogin.vue')
+  },
   // Added a path to serviceList.vue
   {
     path: '/servicelist',
