@@ -88,7 +88,7 @@ export default {
             </li>
 
             <!-- Added Create Service page -->
-            <li v-if="user.isLoggedIn">
+            <li v-if="user.editor && user.isLoggedIn">
               <router-link to="/addservice">
                 <span
                   style="position: relative; top: 6px"
