@@ -58,6 +58,12 @@ const routes = [
     path: '/servicelist',
     name: 'servicelist',
     component: () => import('../components/serviceList.vue')
+  },
+  // Added a path to serviceList.vue
+  {
+    path: '/servicelist',
+    name: 'servicelist',
+    component: () => import('../components/serviceList.vue')
   }
 ]
 const router = createRouter({
