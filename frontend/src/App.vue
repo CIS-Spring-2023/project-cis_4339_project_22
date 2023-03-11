@@ -84,7 +84,6 @@ export default {
               </router-link>
             </li>
 
-            <li>
             <li v-if="user.isLoggedIn">
               <router-link to="/findclient">
                 <span
