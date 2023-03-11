@@ -19,9 +19,6 @@ export default {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
-    if (!this.user.isLoggedIn) {
-      this.$router.push("/userlogin"); //redirect to login if not logged in
-    }
   }
 }
 </script>
