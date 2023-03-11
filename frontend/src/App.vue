@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { userLoginState } from "@/store/userInfo";
 
 export default {
   name: 'App',
@@ -10,10 +11,17 @@ export default {
       orgName: 'Group 22'
     }
   },
+  setup() {
+    const user = userLoginState();
+    return {user};
+  },
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
+    if (!this.user.isLoggedIn) {
+      this.$router.push("/userlogin"); //redirect to login if not logged in
+    }
   }
 }
 </script>
@@ -24,7 +32,7 @@ export default {
         <section class="text-center">
           <img class="m-auto" src="@\assets\DanPersona.svg" />
         </section>
-        <nav class="mt-10">
+        <nav v-if="user.isLoggedIn" class="mt-10">
           <ul class="flex flex-col gap-4">
             <li>
               <router-link to="/">
@@ -36,7 +44,7 @@ export default {
                 Dashboard
               </router-link>
             </li>
-            <li>
+            <li v-if="user.editor">
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -46,8 +54,7 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
-
-            <li>
+            <li v-if="user.editor">
               <router-link to="/eventform">
                 <span
                   style="position: relative; top: 6px"
@@ -57,19 +64,6 @@ export default {
                 Create Event
               </router-link>
             </li>
-
-            <!-- Added Create Service page -->
-            <li>
-              <router-link to="/addservice">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >add_circle_outline</span
-                >
-                Add Service
-              </router-link>
-            </li>
-
             <li>
               <router-link to="/findclient">
                 <span
@@ -90,15 +84,16 @@ export default {
                 Find Event
               </router-link>
             </li>
-            <!-- Installed Language Features to see code in color. Added a Services tab -->
+
+            <!-- Installed Language Features to see code in color. Added a Find Services tab -->
             <li>
-              <router-link to="/servicelist">
+              <router-link to="/findservices">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >format_list_bulleted</span
+                  >search</span
                 >
-                List of Services
+                Find Services
               </router-link>
             </li>
 
@@ -111,7 +106,6 @@ export default {
         class="justify-end items-center h-24 flex"
         style="background: linear-gradient(250deg, #c8102e 70%, #efecec 50.6%)"
       >
-
         <h1 class="mr-20 text-3xl text-white">{{ this.orgName }}</h1>
       </section>
       <div>
