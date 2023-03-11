@@ -47,18 +47,6 @@ export default {
               </router-link>
             </li>
 
-            <!-- Added Create Service page -->
-            <li>
-              <router-link to="/addservice">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >add</span
-                >
-                Add Service
-              </router-link>
-            </li>
-
             <li>
               <router-link to="/eventform">
                 <span
@@ -76,7 +64,7 @@ export default {
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >add</span
+                  >add_circle_outline</span
                 >
                 Add Service
               </router-link>
@@ -102,7 +90,6 @@ export default {
                 Find Event
               </router-link>
             </li>
-
             <!-- Installed Language Features to see code in color. Added a Services tab -->
             <li>
               <router-link to="/servicelist">

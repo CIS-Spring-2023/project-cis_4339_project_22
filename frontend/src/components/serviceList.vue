@@ -6,8 +6,10 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      services: [],
-      serviceTitle: ''
+      service: {
+        title: '',
+        status: 'Active' // displays active services
+      }
     }
   },
   mounted() {
@@ -22,7 +24,7 @@ export default {
       window.scrollTo(0, 0)
     },
     editService(serviceID) {
-      this.$router.push({ name: 'servicetitle', params: { id: serviceID } })
+      this.$router.push({ name: 'service.title', params: { id: serviceID } })
     }
   }
 }
@@ -51,7 +53,8 @@ export default {
         <table class="min-w-full shadow-md rounded">
           <thead class="bg-gray-50 text-xl">
             <tr>
-              <th class="p-4 text-left">Service Title</th>
+              <th class="p-4 text-left">Title</th>
+              <th class="p-4 text-left">Status</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
@@ -61,6 +64,7 @@ export default {
               :key="service._id"
             >
               <td class="p-2 text-left">{{ service.title }}</td>
+              <td class="p-2 text-left">{{ service.status }}</td>
             </tr>
           </tbody>
         </table>

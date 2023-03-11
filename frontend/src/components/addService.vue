@@ -12,7 +12,8 @@ export default {
     return {
       // removed unnecessary extra array
       service: {
-        title: ''
+        title: '',
+        status: 'Active'
       }
     }
   },
@@ -39,7 +40,8 @@ export default {
   validations() {
     return {
       service: {
-        title: { required }
+        title: { required },
+        status: { required }
       }
     }
   }
@@ -66,7 +68,7 @@ export default {
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
-              <span class="text-gray-700">Service Title</span>
+              <span class="text-gray-700">Title</span>
               <span style="color: #ff0000">*</span>
               <input
                 type="text"
@@ -82,6 +84,17 @@ export default {
                   {{ error.$message }}!
                 </p>
               </span>
+            </label>
+          </div>
+
+          <!-- form field -->
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Status</span>
+              <select v-model="service.status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="Active" selected>Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
             </label>
           </div>
         </div>
