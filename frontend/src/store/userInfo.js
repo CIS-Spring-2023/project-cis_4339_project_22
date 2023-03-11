@@ -21,6 +21,7 @@ export const userLoginState = defineStore({
       }
       else if (validity == 'viewer') {
         this.isLoggedIn = true; ///logged in
+        this.editor = false;
         this.$router.push("/"); //redirect
         return true;
       }

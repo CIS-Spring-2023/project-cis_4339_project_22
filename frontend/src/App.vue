@@ -15,6 +15,11 @@ export default {
     const user = userLoginState();
     return {user};
   },
+  methods: {
+    logout() {
+      this.user.isLoggedIn = false;
+    }
+  },
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
@@ -41,7 +46,7 @@ export default {
                 User Login
               </router-link>
             </li>
-            <li v-if="user.isLoggedIn">
+            <li v-if="user.isLoggedIn" v-on:click="logout()">
               <router-link to="/">
                 <span
                   style="position: relative; top: 6px"
