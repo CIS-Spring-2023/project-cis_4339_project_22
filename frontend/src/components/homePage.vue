@@ -29,13 +29,15 @@ export default {
       datasets: [
         {
           label: 'My First Dataset',
-          data: [11, 4, 14, 3, 9],
+          data: [11, 4, 14, 3, 9, 12, 2],
           backgroundColor: [
             'rgb(255, 99, 100)',
             'rgb(151, 33, 210)',
             'rgb(255, 199, 0)',
             'rgb(33, 210, 68)',
-            'rgb(33, 39, 210)'
+            'rgb(33, 39, 210)',
+            'rgb(23, 39, 90)',
+            'rgb(50, 60, 300)'
           ],
           hoverOffset: 4
         }
