@@ -44,7 +44,7 @@ router.put('/update/:id', (req, res, next) => {
   })
 })
 
-// DELETE service should be SOFT deleted
+// DELETE service should be SOFT deletedz
 // router.delete('/:id', (req, res, next) => {
 //   services.findByIdAndDelete(req.params.id, (error, data) => {
 //     if (error) {
