@@ -73,12 +73,12 @@ export default {
             </li>
 
             <!-- Added Create Service page -->
-            <li>
+            <li v-if="user.isLoggedIn">
               <router-link to="/addservice">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >dd_circle_outline</span
+                  >add_circle_outline</span
                 >
                 Add Service
               </router-link>
