@@ -31,7 +31,7 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
-            <li>
+            <li v-if="!user.isLoggedIn">
               <router-link to="/userlogin">
                 <span
                   style="position: relative; top: 6px"
@@ -39,6 +39,16 @@ export default {
                   >login</span
                 >
                 User Login
+              </router-link>
+            </li>
+            <li v-if="user.isLoggedIn">
+              <router-link to="/">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >logout</span
+                >
+                Logout
               </router-link>
             </li>
             <li>
