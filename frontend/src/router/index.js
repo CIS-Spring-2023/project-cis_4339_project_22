@@ -7,6 +7,12 @@ const routes = [
     props: true,
     component: () => import('../components/homePage.vue')
   },
+  // Added a path to userLogin.vue
+  {
+    path: '/userlogin',
+    name: 'userlogin',
+    component: () => import('../components/userLogin.vue')
+  },
   {
     path: '/intakeform',
     name: 'intakeform',
@@ -46,18 +52,6 @@ const routes = [
     name: 'eventdetails',
     props: true,
     component: () => import('../components/eventDetails.vue')
-  },
-  // Added a path to userLogin.vue
-  {
-    path: '/userlogin',
-    name: 'userlogin',
-    component: () => import('../components/userLogin.vue')
-  },
-  // Added a path to serviceList.vue
-  {
-    path: '/servicelist',
-    name: 'servicelist',
-    component: () => import('../components/serviceList.vue')
   },
   // Added a path to serviceList.vue
   {
