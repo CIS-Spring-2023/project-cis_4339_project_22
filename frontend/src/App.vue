@@ -29,7 +29,7 @@ export default {
         <section class="text-center">
           <img class="m-auto" src="@\assets\DanPersona.svg" />
         </section>
-        <nav v-if="!user.isLoggedIn" class="mt-10">
+        <nav class="mt-10">
           <ul class="flex flex-col gap-4">
             <li>
               <router-link to="/userlogin">
@@ -41,7 +41,7 @@ export default {
                 User Login
               </router-link>
             </li>
-            <li v-if="user.isLoggedIn">
+            <li>
               <router-link to="/">
                 <span
                   style="position: relative; top: 6px"
