@@ -52,7 +52,7 @@ const routes = [
     name: 'userlogin',
     component: () => import('../components/userLogin.vue')
   },
-  // Added a path to serviceList.vue page
+  // Added a path to a newly added tab: findServices.vue
   {
     path: '/servicelist',
     name: 'servicelist',

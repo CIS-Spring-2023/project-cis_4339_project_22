@@ -69,6 +69,19 @@ export default {
                 Create Event
               </router-link>
             </li>
+
+            <!-- Added Create Service page -->
+            <li>
+              <router-link to="/addservice">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >add</span
+                >
+                Add Service
+              </router-link>
+            </li>
+
             <li>
               <router-link to="/findclient">
                 <span
@@ -89,19 +102,8 @@ export default {
                 Find Event
               </router-link>
             </li>
-            <li>
-              <!--added user login page -->
-              <router-link to="/userlogin">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >login</span
-                >
-                UserLogin
-              </router-link>
-            </li>
 
-            <!-- Installed Language Features to see code in color. Added a Find Services tab -->
+            <!-- Installed Language Features to see code in color. Added a Services tab -->
             <li>
               <router-link to="/servicelist">
                 <span
