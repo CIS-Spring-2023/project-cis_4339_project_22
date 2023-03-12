@@ -2,12 +2,14 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
+import barChart from './barChart.vue'
 import Chart from 'chart.js/auto'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   components: {
-    AttendanceChart
+    AttendanceChart,
+    barChart
   },
   data() {
     return {
@@ -37,7 +39,7 @@ export default {
             'rgb(33, 210, 68)',
             'rgb(33, 39, 210)',
             'rgb(23, 39, 90)',
-            'rgb(90, 110, 150)'
+            'rgb(90, 130, 150)'
           ],
           hoverOffset: 4
         }
@@ -138,30 +140,44 @@ export default {
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
               <tr>
-                <td> FITP </td>
-                <td> 3/9/2023 </td>
-                <td> 15 </td>
+                <td>FITP</td>
+                <td>3/9/2023</td>
+                <td>15</td>
               </tr>
               <tr>
-                <td> Tutoring </td>
-                <td> 3/10/2023 </td>
-                <td> 7 </td>
+                <td>Tutoring</td>
+                <td>3/10/2023</td>
+                <td>19</td>
               </tr>
               <tr>
-                <td> Cloudathon </td>
-                <td> 4/25/2023 </td>
-                <td> 40 </td>
+                <td>Houston Conference</td>
+                <td>3/14/2023</td>
+                <td>33</td>
+              </tr>
+              <tr>
+                <td>Career Fair</td>
+                <td>3/26/2023</td>
+                <td>29</td>
+              </tr>
+              <tr>
+                <td>Cloudathon</td>
+                <td>4/25/2023</td>
+                <td>40</td>
               </tr>
             </tbody>
           </table>
           <!-- breaks added to add more distance between chart and table -->
-          <br>
-          <br>
-          <!--canvas chart element-->
+          <br />
+          <!--Bar Chart Component-->
           <div>
-            <!--Set width and height to 500-->
-            <canvas id="myChart" width="500" height="500"></canvas>
+            <barChart />
           </div>
+          <br />
+          <!--canvas chart element-->
+          <div class="shadow-lg rounded-lg overflow-hidden"> <!--taken from barChart.vue-->
+            <canvas id="myChart" width="500" height="500"></canvas> <!--Set width and height to 500-->
+          </div>
+
           <div>
             <AttendanceChart
               v-if="!loading && !error"
@@ -178,8 +194,10 @@ export default {
             </div>
             <!-- End of loading animation -->
             <!-- Start of error alert -->
-            <!-- This portion of the code will be commented out for Spring 2 due to backend not being connected-->
+
+            <!-- This portion of the code is commented out for Sprint 2 due to backend not being connected-->
             <!-- <div class="mt-12 bg-red-50" v-if="error"> -->
+
             <!-- <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800"> -->
             <!-- {{ error.title }} -->
             <!-- </h3> -->
