@@ -58,6 +58,12 @@ const routes = [
     path: '/servicelist',
     name: 'servicelist',
     component: () => import('../components/serviceList.vue')
+  },
+  // serviceListEditor.vue for editors to filter active and inactive services
+  {
+    path: '/servicelisteditor',
+    name: 'servicelisteditor',
+    component: () => import('../components/serviceListEditor.vue')
   }
 ]
 const router = createRouter({

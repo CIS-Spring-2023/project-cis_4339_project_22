@@ -6,6 +6,9 @@ For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
 ## Project setup
 
     npm install
+    npm install pinia
+    npm install charjs
+    npm install bcryptjs
 
 ### Before startup
 You need to either have a local backend running and or use a cloud deployed backend.
