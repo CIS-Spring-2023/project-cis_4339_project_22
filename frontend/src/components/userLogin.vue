@@ -14,7 +14,7 @@ export default {
     return {user};
   },
   methods:{
-    login() {
+    async login() {
       const loginSuccess = this.user.login(this.username, this.password);
       if (!loginSuccess) { //login error
         this.loginError = true;
