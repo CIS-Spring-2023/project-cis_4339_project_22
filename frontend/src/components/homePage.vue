@@ -37,7 +37,7 @@ export default {
             'rgb(33, 210, 68)',
             'rgb(33, 39, 210)',
             'rgb(23, 39, 90)',
-            'rgb(50, 60, 300)'
+            'rgb(90, 110, 150)'
           ],
           hoverOffset: 4
         }
@@ -136,6 +136,21 @@ export default {
                 <td class="p-2 text-left">{{ event.name }}</td>
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
+              </tr>
+              <tr>
+                <td> FITP </td>
+                <td> 3/9/2023 </td>
+                <td> 15 </td>
+              </tr>
+              <tr>
+                <td> Tutoring </td>
+                <td> 3/10/2023 </td>
+                <td> 7 </td>
+              </tr>
+              <tr>
+                <td> Cloudathon </td>
+                <td> 4/25/2023 </td>
+                <td> 40 </td>
               </tr>
             </tbody>
           </table>
