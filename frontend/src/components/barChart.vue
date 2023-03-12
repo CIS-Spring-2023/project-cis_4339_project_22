@@ -1,5 +1,5 @@
 <script>
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js'
 
 export default {
   mounted() {
@@ -38,30 +38,30 @@ export default {
         scales: {
           y: {
             ticks: {
-              stepSize: 1,
-            },
+              stepSize: 1
+            }
           },
           x: {
             gridLines: {
-              display: false,
-            },
-          },
+              display: false
+            }
+          }
         },
         plugins: {
           legend: {
-            display: false,
-          },
+            display: false
+          }
         },
         responsive: true,
-        maintainAspectRatio: true,
-      },
-    });
-  },
-};
+        maintainAspectRatio: true
+      }
+    })
+  }
+}
 </script>
 
 <template>
   <div class="shadow-lg rounded-lg overflow-hidden">
-    <canvas class="p-10" ref="attendanceChart"></canvas>
+    <canvas class="p-10" ref="attendanceChart"> </canvas>
   </div>
 </template>

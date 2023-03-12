@@ -24,37 +24,35 @@ export default {
   mounted() {
     this.getAttendanceData()
     console.log('Component mounted.')
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart')
 
     const data = {
-      labels: ['77005', '77401', '77094', '77388', '77494', '77449', '77084'],
+      labels: ['77005', '77401', '77094', '77388', '77494'],
       datasets: [
         {
           label: 'My First Dataset',
-          data: [11, 4, 14, 3, 9, 12, 2],
+          data: [11, 4, 14, 3, 9],
           backgroundColor: [
             'rgb(255, 99, 100)',
             'rgb(151, 33, 210)',
             'rgb(255, 199, 0)',
             'rgb(33, 210, 68)',
-            'rgb(33, 39, 210)',
-            'rgb(23, 39, 90)',
-            'rgb(90, 130, 150)'
+            'rgb(33, 39, 210)'
           ],
           hoverOffset: 4
         }
       ]
-    };
-    Chart.defaults.font.size = 20; //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
+    }
+    Chart.defaults.font.size = 20 //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
     const myChart = new Chart(ctx, {
       type: 'pie',
       data: data,
       options: {
         maintainAspectRatio: false //option to prevent chart size from changing
       }
-    });
+    })
 
-    myChart; //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
+    myChart //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
   },
 
   methods: {
@@ -150,7 +148,7 @@ export default {
                 <td>19</td>
               </tr>
               <tr>
-                <td>Houston Conference</td>
+                <td>Conference</td>
                 <td>3/14/2023</td>
                 <td>33</td>
               </tr>
@@ -174,8 +172,10 @@ export default {
           </div>
           <br />
           <!--canvas chart element-->
-          <div class="shadow-lg rounded-lg overflow-hidden"> <!--taken from barChart.vue-->
-            <canvas id="myChart" width="500" height="500"></canvas> <!--Set width and height to 500-->
+          <!--taken from barChart.vue-->
+          <div class="shadow-lg rounded-lg overflow-hidden">
+            <!--Set width and height to 500-->
+            <canvas id="myChart" width="500" height="500"></canvas>
           </div>
 
           <div>
@@ -183,7 +183,8 @@ export default {
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
-            ></AttendanceChart>
+            >
+            </AttendanceChart>
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
               <p
