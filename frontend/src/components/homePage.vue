@@ -148,7 +148,7 @@ export default {
                 <td>19</td>
               </tr>
               <tr>
-                <td>Conference</td>
+                <td>Houston Conference</td>
                 <td>3/14/2023</td>
                 <td>33</td>
               </tr>
