@@ -15,7 +15,7 @@ export default {
   },
   methods:{
     async login() {
-      const loginSuccess = this.user.login(this.username, this.password);
+      const loginSuccess = await this.user.login(this.username, this.password);
       if (!loginSuccess) { //login error
         this.loginError = true;
       }
@@ -54,7 +54,7 @@ export default {
               />
           </label>
           <!--login error message-->
-          <div v-if="loginError" style="color: #ff0000">Incorrect Login. <br> Hint: username = "username", password = "password" for editor role. <br> username = "username2", password = "password2" for viewer role</div>
+          <div v-if="loginError" style="color: #ff0000">Incorrect Login.</div><div>(For testing and grading purposes)<br>For editor role: Username = "editor"<br>For viewer role: Username = "viewer"<br>Password = "password"</div>
           <!-- submit button -->
           <div class="mt-10">
             <button class="bg-red-700 text-white rounded" type="submit" v-on:click="login">

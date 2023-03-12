@@ -36,18 +36,16 @@ export const userLoginState = defineStore({
 
 async function apiLogin(username, password) { //replace with api check
   const salt = await bcrypt.genSalt(10);
-  const editorUsername = 'username';
-  const editorPassword = 'password';
-  const viewerUsername = 'username2';
-  const viewerPassword = 'password2';
+  const editorUsername = 'editor';
+  const viewerUsername = 'viewer';
+  const correctPassword = 'password';
   //encrypt passwords before checking
   const hashedPassword = await bcrypt.hash(password, salt);
-  const hashedEditorPassword = await bcrypt.hash(editorPassword, salt);
-  const hashedViewerPassword = await bcrypt.hash(viewerPassword, salt);
-  if (username == editorUsername && hashedPassword == hashedEditorPassword) {
+  const hashedCorrectPassword = await bcrypt.hash(correctPassword, salt);
+  if (username == editorUsername && hashedPassword == hashedCorrectPassword) {
     return 'editor';
   }
-  else if (username == viewerUsername && hashedPassword == hashedViewerPassword) {
+  else if (username == viewerUsername && hashedPassword == hashedCorrectPassword) {
     return 'viewer';
   }
   else {
