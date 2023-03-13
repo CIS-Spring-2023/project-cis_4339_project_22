@@ -1,5 +1,4 @@
 <script>
-import { DateTime } from 'luxon'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
@@ -46,7 +45,7 @@ export default {
     </div>
 
     <hr class="mt-10 mb-10" />
-    <!-- Display Found Data -->
+    <!-- Display Found Data: Active services only -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
     >

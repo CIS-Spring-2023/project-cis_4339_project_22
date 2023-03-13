@@ -14,7 +14,7 @@ export default {
         title: '',
         status: ''
       },
-      searchBy: 'Active'
+      searchBy: ''
     }
   },
   mounted() {
@@ -50,7 +50,7 @@ export default {
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
       >
         <h2 class="text-2xl font-bold">Search Service By</h2>
-        <!-- Displays Client Name search field -->
+        <!-- Display Services search field -->
         <div class="flex flex-col">
           <select
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

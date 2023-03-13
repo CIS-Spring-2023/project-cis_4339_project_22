@@ -53,7 +53,7 @@ const routes = [
     props: true,
     component: () => import('../components/eventDetails.vue')
   },
-  // Added a path to serviceList.vue
+  // Added a path to serviceList.vue for viewers to view only active services
   {
     path: '/servicelist',
     name: 'servicelist',

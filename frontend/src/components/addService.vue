@@ -1,7 +1,6 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -49,6 +48,7 @@ export default {
   }
 }
 </script>
+<!-- form to create a new service -->
 <template>
   <main>
     <div>
@@ -67,7 +67,7 @@ export default {
         >
           <h2 class="text-2xl font-bold">Service</h2>
 
-          <!-- form field -->
+          <!-- form field to fill out required service title -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Title</span>
@@ -89,7 +89,7 @@ export default {
             </label>
           </div>
 
-          <!-- form field -->
+          <!-- form field to select the service status -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Status</span>

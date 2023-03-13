@@ -12,7 +12,11 @@ export default {
   },
   data() {
     return {
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
         status: ''
@@ -46,7 +50,11 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: { required },
 	      service: { required }
@@ -102,8 +110,9 @@ export default {
             <label class="block">
               <span class="text-gray-700">Status</span>
               <select v-model="service.status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+                <option value="Blank" selected></option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
               </select>
             </label>
           </div>
