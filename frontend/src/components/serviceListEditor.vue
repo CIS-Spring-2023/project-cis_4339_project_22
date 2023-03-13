@@ -10,17 +10,32 @@ export default {
         { title: 'Service B', status: 'Inactive' },
         { title: 'Service C', status: 'Active' }
       ],
+      searchBy: '',
       service: {
         title: '',
-        status: ''
+        status: 'Active'
       },
-      searchBy: ''
     }
   },
   mounted() {
     this.getServices()
   },
   methods: {
+    handleSubmitForm() {
+      let endpoint = ''
+      if (this.searchBy === 'Service Title') {
+        endpoint = `services/search/?name=${this.service.title}&searchBy=title`
+      }
+      else if (this.service.status.toLowerCase() === 'active') {
+        endpoint = `services/search/?name=${this.service.title}&searchBy=title&status=active`
+      }
+      else if (this.service.status.toLowerCase() === 'inactive') {
+        endpoint = `services/search/?name=${this.service.title}&searchBy=title&status=inactive`
+      }
+      axios.get(`${apiURL}/${endpoint}`).then((res) => {
+        this.services = res.data
+      })
+    },
     // abstracted method to get services
     getServices() {
       axios.get(`${apiURL}/services`).then((res) => {
@@ -28,8 +43,15 @@ export default {
       })
       window.scrollTo(0, 0)
     },
+    // Resets title field only
+    clearSearch() {
+      this.searchBy = ''
+      this.service.title = ''
+
+      this.getServices()
+    },
     editService(serviceID) {
-      this.$router.push({ name: 'service.title', params: { id: serviceID } })
+      this.$router.push({ name: 'updateservice', params: { id: serviceID } })
     }
   }
 }
@@ -56,19 +78,32 @@ export default {
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             v-model="searchBy"
           >
-            <option value="Blank" selected></option>
+            <option value="Service Title" selected>Service Title</option>
+            <option value="Service Status">Service Status</option>
+          </select>
+        </div>
+        <!-- Displays service title search field -->
+        <div class="flex flex-col" v-if="searchBy === 'Service Title'">
+          <label class="block">
+            <input
+              type="text"
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              v-model="service.title"
+              v-on:keyup.enter="handleSubmitForm"
+              placeholder="Enter service title"
+            />
+          </label>
+        </div>
+        <!-- Displays service status search field -->
+        <div class="flex flex-col" v-if="searchBy === 'Service Status'">
+          <select
+            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            v-model="service.status"
+            v-on:change="handleSubmitForm"
+            >
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
-        </div>
-        <!-- Displays service status search field -->
-        <div class="flex flex-col" v-if="searchBy === 'Active'">
-          <input
-            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            type="option"
-            v-model="service.status"
-            v-on:keyup.enter="handleSubmitForm"
-          />
         </div>
       </div>
       <div
@@ -114,7 +149,7 @@ export default {
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editService(service._id)"
+              @click="editService(service.ID)"
               v-for="service in services"
               :key="service._id"
               class="cursor-pointer"

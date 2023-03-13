@@ -20,7 +20,8 @@ export default {
       service: {
         title: '',
         status: ''
-    }
+    },
+    events: []
   }
 },
 // Added created() based on eventDetails.vue to call events that the services are associated with
