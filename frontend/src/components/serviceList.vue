@@ -6,7 +6,11 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
         status: 'Active' // displays active services

@@ -10,7 +10,11 @@ export default {
   },
   data() {
     return {
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
         status: 'Active'
@@ -23,16 +27,13 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        axios
-          .post(`${apiURL}/services`, this.service)
-          .then(() => {
-            alert('Service has been added.')
-            this.$router.push({ name: 'serviceist' })
-          })
-          .catch((error) => {
-            console.log(error)
-            alert('Failed to add service.')
-          })
+        const newService = {
+          title: this.service.title,
+          status: this.service.status
+        }
+        this.services.push(newService)
+        alert('Service has been added.')
+        this.$router.push({ name: 'servicelisteditor' })
       }
     }
   },
