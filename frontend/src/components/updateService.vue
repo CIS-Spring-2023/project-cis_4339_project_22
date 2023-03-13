@@ -4,7 +4,6 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
-import { DateTime } from 'luxon'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -13,7 +12,7 @@ export default {
   },
   data() {
     return {
-      // removed unnecessary extra array
+      services: [],
       service: {
         title: '',
         status: ''
@@ -47,15 +46,17 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
+      services: [],
       service: {
         title: { required },
-	  service: { required }
+	      service: { required }
       }
     }
   }
 }
 }
 </script>
+
 <template>
   <main>
     <div>

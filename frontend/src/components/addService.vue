@@ -10,7 +10,7 @@ export default {
   },
   data() {
     return {
-      // removed unnecessary extra array
+      services: [],
       service: {
         title: '',
         status: 'Active'
@@ -27,7 +27,7 @@ export default {
           .post(`${apiURL}/services`, this.service)
           .then(() => {
             alert('Service has been added.')
-            this.$router.push({ name: 'servicelist' })
+            this.$router.push({ name: 'serviceist' })
           })
           .catch((error) => {
             console.log(error)
@@ -39,6 +39,7 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
+      services: [],
       service: {
         title: { required },
         status: { required }

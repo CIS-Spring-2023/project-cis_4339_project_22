@@ -64,6 +64,12 @@ const routes = [
     path: '/servicelisteditor',
     name: 'servicelisteditor',
     component: () => import('../components/serviceListEditor.vue')
+  },
+  // updateService.vue 
+  {
+    path: '/updateservice/:id',
+    name: 'updateservice',
+    component: () => import('../components/updateService.vue')
   }
 ]
 const router = createRouter({

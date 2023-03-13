@@ -27,6 +27,7 @@ export default {
   }
 }
 </script>
+
 <template>
   <main class="flex flex-row">
     <div id="_container" class="h-screen">
