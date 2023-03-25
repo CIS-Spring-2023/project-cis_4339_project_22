@@ -1,7 +1,6 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -10,7 +9,11 @@ export default {
   },
   data() {
     return {
-      // removed unnecessary extra array
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
         status: 'Active'
@@ -23,22 +26,20 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        axios
-          .post(`${apiURL}/services`, this.service)
-          .then(() => {
-            alert('Service has been added.')
-            this.$router.push({ name: 'servicelist' })
-          })
-          .catch((error) => {
-            console.log(error)
-            alert('Failed to add service.')
-          })
+        const newService = {
+          title: this.service.title,
+          status: this.service.status
+        }
+        this.services.push(newService)
+        alert('Service has been added.')
+        this.$router.push({ name: 'servicelisteditor' })
       }
     }
   },
   // sets validations for the various data properties
   validations() {
     return {
+      services: [],
       service: {
         title: { required },
         status: { required }
@@ -47,6 +48,7 @@ export default {
   }
 }
 </script>
+<!-- form to create a new service -->
 <template>
   <main>
     <div>
@@ -65,7 +67,7 @@ export default {
         >
           <h2 class="text-2xl font-bold">Service</h2>
 
-          <!-- form field -->
+          <!-- form field to fill out required service title -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Title</span>
@@ -87,7 +89,7 @@ export default {
             </label>
           </div>
 
-          <!-- form field -->
+          <!-- form field to select the service status -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Status</span>

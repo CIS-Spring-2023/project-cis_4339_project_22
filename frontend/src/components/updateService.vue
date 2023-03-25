@@ -4,7 +4,6 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
-import { DateTime } from 'luxon'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -13,11 +12,16 @@ export default {
   },
   data() {
     return {
-      // removed unnecessary extra array
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
         status: ''
-    }
+    },
+    events: []
   }
 },
 // Added created() based on eventDetails.vue to call events that the services are associated with
@@ -47,15 +51,21 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: { required },
-	  service: { required }
+	      service: { required }
       }
     }
   }
 }
 }
 </script>
+
 <template>
   <main>
     <div>
@@ -101,8 +111,9 @@ export default {
             <label class="block">
               <span class="text-gray-700">Status</span>
               <select v-model="service.status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+                <option value="Blank" selected></option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
               </select>
             </label>
           </div>
