@@ -42,7 +42,7 @@ export default {
     },
     editEvent(eventID) {
       this.$router.push({ name: 'updateevent', params: { id: eventID } })
-    }
+    },
 
   // sets validations for the various data properties
   validations() {
