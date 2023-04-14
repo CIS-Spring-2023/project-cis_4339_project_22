@@ -7,7 +7,7 @@ For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
 
     npm install
     npm install pinia
-    npm install charjs
+    npm install chartjs
     npm install bcryptjs
 
 ### Before startup
