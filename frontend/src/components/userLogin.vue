@@ -1,5 +1,8 @@
 <script>
 import { userLoginState } from "@/store/userInfo";
+import bcrypt from 'bcryptjs';
+import axios from 'axios'
+const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   data() {
@@ -15,10 +18,21 @@ export default {
   },
   methods:{
     async login() {
-      const loginSuccess = await this.user.login(this.username, this.password);
-      if (!loginSuccess) { //login error
-        this.loginError = true;
-      }
+      const salt = await bcrypt.genSalt(10);
+      console.log(salt);
+      axios.get(`${apiURL}/user/${this.username}/${this.password}`).then((res) => {
+        if (res.data) {
+          this.user.isLoggedIn = true; //logged in
+          if (res.data.role == "editor") {
+            this.user.editor = true; //editor role
+          };
+          this.$router.push("/"); //redirect
+        }
+        else {
+          console.log("not found");
+          this.loginError = true;
+        }
+      })
     }
   }
 }
