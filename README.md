@@ -26,10 +26,14 @@ Connection URL:
 mongodb+srv://4339group22:lindner@4339group22cluster.oxqlqta.mongodb.net/DataPlatformProject
 ```
 Advanced Connection Options:
+
 General -> Connection String Scheme -> mongodb+srv
+
 Authentication -> username: ``4339group22`` - password: ``lindner``
 
 User Login Informaation:
+
 Editor Role: username: ``editor`` - password: ``password``
+
 Viewer Role: username: ``viewer`` - password: ``password``
 
