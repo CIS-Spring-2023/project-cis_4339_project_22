@@ -18,7 +18,7 @@ export default {
   },
   methods:{
     async login() {
-      const salt = await bcrypt.genSalt(10);
+      const salt = bcrypt.genSaltSync(10);
       console.log(salt);
       axios.get(`${apiURL}/user/${this.username}/${this.password}`).then((res) => {
         if (res.data) {
@@ -68,7 +68,7 @@ export default {
               />
           </label>
           <!--login error message-->
-          <div v-if="loginError" style="color: #ff0000">Incorrect Login.</div><div>(For testing and grading purposes)<br>For editor role: Username = "editor"<br>For viewer role: Username = "viewer"<br>Password = "password"</div>
+          <div v-if="loginError" style="color: #ff0000">Incorrect Login.</div>
           <!-- submit button -->
           <div class="mt-10">
             <button class="bg-red-700 text-white rounded" type="submit" v-on:click="login">
