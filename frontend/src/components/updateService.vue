@@ -12,14 +12,11 @@ export default {
   },
   data() {
     return {
-      services: [
-        { title: 'Service A', status: 'Active' },
-        { title: 'Service B', status: 'Inactive' },
-        { title: 'Service C', status: 'Active' }
-      ],
       service: {
         title: '',
-        status: ''
+        status: {
+          oneOf: ['Active', 'Inactive']
+        }
     },
     events: []
   }
@@ -51,11 +48,6 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
-      services: [
-        { title: 'Service A', status: 'Active' },
-        { title: 'Service B', status: 'Inactive' },
-        { title: 'Service C', status: 'Active' }
-      ],
       service: {
         title: { required },
 	      service: { required }

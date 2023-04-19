@@ -5,16 +5,12 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      services: [
-        { title: 'Service A', status: 'Active' },
-        { title: 'Service B', status: 'Inactive' },
-        { title: 'Service C', status: 'Active' }
-      ],
-      searchBy: '',
       service: {
         title: '',
-        status: 'Active'
-      },
+        status: {
+          oneOf: ['Active', 'Inactive']
+        }
+      }
     }
   },
   mounted() {
