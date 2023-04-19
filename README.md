@@ -21,6 +21,7 @@ cd frontend
 Follow instructions in frontend README for setup and running as a local instance.
 
 ## Database Connection Instructions
+Using MongoDB Compass
 Connection URL:
 ```
 mongodb+srv://4339group22:lindner@4339group22cluster.oxqlqta.mongodb.net/DataPlatformProject
