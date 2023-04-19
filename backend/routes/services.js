@@ -6,6 +6,20 @@ const org = process.env.ORG
 // importing data model schemas
 const { services } = require('../models/models')
 
+// GET all services
+router.get('/', (req, res, next) => {
+  // use findOne instead of find to not return array
+  services.find((error, data) => {
+    if (error) {
+      return next(error)
+    } else if (!data) {
+      res.status(400).send('Service not found')
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 // GET single service by ID
 router.get('/id/:id', (req, res, next) => {
   // use findOne instead of find to not return array

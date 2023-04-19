@@ -1,10 +1,12 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
+import axios from 'axios'
+const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    return {v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
     return {
@@ -33,7 +35,15 @@ export default {
       if (isFormCorrect) {
         console.log('Form data:', this.service)
         // Add the created service to the services array
-        this.services.push({...this.service})
+        //this.services.push({...this.service})
+        axios.post(`${apiURL}/services`, this.service)
+          .then(() => {
+            alert('Service has been added.')
+            this.$router.push({ name: 'servicelisteditor' })
+          })
+          .catch((error) => {
+            console.log(error)
+          })
         // Reset the form
         this.resetForm()
         // Show success message

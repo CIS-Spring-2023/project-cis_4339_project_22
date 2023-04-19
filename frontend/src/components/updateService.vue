@@ -25,11 +25,11 @@ export default {
   created() {
     axios.get(`${apiURL}/services/id/${this.$route.params.id}`).then((res) => {
       this.service = res.data
-      this.service.title.forEach((e) => {
+      /*this.service.title.forEach((e) => {
         axios.get(`${apiURL}/events/id/${e}`).then((res) => {
           this.events.push(res.data)
         })
-      })
+      })*/
     })
   },
 
@@ -86,13 +86,12 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="service.title"
               />
-              <span class="text-black" v-if="v$.service.title.$error">
+              <!--<span class="text-black" v-if="v$.service.title.$error">-->
+              <span class="text-black">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.service.title.$errors"
-                  :key="error.$uid"
                 >
-                  {{ error.$message }}!
+                  test test
                 </p>
               </span>
             </label>
