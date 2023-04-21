@@ -3,18 +3,19 @@ import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  data() {
-    return {
-      service: {
-        title: '',
-        status: {
-          oneOf: ['Active', 'Inactive']
-        }
-      }
+  props: {
+    service: {
+      type: Object,
+      required: true
     }
   },
   mounted() {
     this.getServices()
+  },
+  data() {
+    return {
+      services: [] // add this line to set initial value of services to an empty array
+    }
   },
   methods: {
     // abstracted method to get services
@@ -24,9 +25,13 @@ export default {
       })
       window.scrollTo(0, 0)
     },
-    editService(serviceID) {
-      this.$router.push({ name: 'service.title', params: { id: serviceID } })
-    }
+    clearSearch() {
+      // Resets all the variables
+      this.searchBy = ''
+      this.service.title = ''
+
+      this.getEvents()
+    },
   }
 }
 </script>
@@ -57,11 +62,7 @@ export default {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
-            <tr
-              @click="editService(service._id)"
-              v-for="service in services"
-              :key="service._id"
-            >
+            <tr v-for="service in services" :key="service.id">
               <td class="p-2 text-left">{{ service.title }}</td>
             </tr>
           </tbody>

@@ -3,14 +3,10 @@ import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  data() {
-    return {
-      service: {
-        title: '',
-        status: {
-          oneOf: ['Active', 'Inactive']
-        }
-      }
+  props: {
+    service: {
+      type: Object,
+      required: true
     }
   },
   mounted() {

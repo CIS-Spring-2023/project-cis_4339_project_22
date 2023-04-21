@@ -1,10 +1,15 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
+import axios from 'axios';
+import serviceList from '@/components/serviceList.vue';
 
 export default {
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
+  },
+  components: {
+    serviceList
   },
   data() {
     return {
@@ -31,13 +36,17 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found in validation, proceed with form submission
       if (isFormCorrect) {
-        console.log('Form data:', this.service)
-        // Add the created service to the services array
-        this.services.push({...this.service})
-        // Reset the form
-        this.resetForm()
-        // Show success message
-        this.showSuccessMessage('Service has been added.')
+        try {
+          const response = await axios.post('/api/services', this.service);
+          // Add the created service to the services array
+          this.services.push(response.data);
+          // Reset the form
+          this.resetForm();
+          // Show success message
+          this.showSuccessMessage('Service has been added.')
+        } catch (error) {
+          this.showErrorMessage('Failed to add service. Please try again.');
+        }
       }
     },
     editService(serviceId) {
@@ -53,16 +62,21 @@ export default {
       this.service.title = this.services[index].title;
       this.service.status = this.services[index].status;
     },
-    handleUpdateForm() {
+    async handleUpdateForm() {
       // Updates the service in the services array
       if (this.editServiceId !== null) {
         const editedService = { ...this.service };
-        this.services.splice(this.editServiceId, 1, editedService);
-        // Reset the form
-        this.resetForm()
-        // Show success message
-        this.showSuccessMessage('Service has been updated.')
-        this.editServiceId = null
+        try {
+          await axios.put(`/api/services/${this.services[this.editServiceId].id}`, editedService);
+          this.services.splice(this.editServiceId, 1, editedService);
+          // Reset the form
+          this.resetForm()
+          // Show success message
+          this.showSuccessMessage('Service has been updated.')
+          this.editServiceId = null
+        } catch (error) {
+          this.showErrorMessage('Failed to update service.')
+        }
       }
     },
     resetForm() {
@@ -80,16 +94,20 @@ export default {
     this.editServiceId = null
     this.isEditMode = false
     },
-    deleteService(index) {
+    async deleteService(index) {
       // Get the id of the service being deleted
       const serviceId = this.services[index].id;
-      const serviceIndex = this.services.findIndex(service => service.id === serviceId);
-      // Remove the service from the services array
-      this.services.splice(serviceIndex, 1);
-      // Reset the form
-      this.resetForm()
-      // Show success message
-      this.showSuccessMessage('Service has been deleted.')
+      try {
+        await axios.delete(`/api/services/${serviceId}`);
+        // Remove the service from the services array
+        this.services.splice(index, 1);
+        // Reset the form
+        this.resetForm()
+      } catch (error) {
+        // Show error message
+        this.showErrorMessage('Failed to delete service.')
+        // Show success message
+        this.showSuccessMessage('Service has been deleted.')
       }
     },
     showSuccessMessage(message) {
@@ -99,6 +117,7 @@ export default {
       console.log('Error:', message)
     }
   }
+}
 </script>
 <!-- form to create a new service -->
 <template>

@@ -44,17 +44,17 @@ router.put('/update/:id', (req, res, next) => {
   })
 })
 
-// DELETE service should be SOFT deleted
-// router.delete('/:id', (req, res, next) => {
-//   services.findByIdAndDelete(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else if (!data) {
-//       res.status(400).send('Service not found')
-//     } else {
-//       res.send('Service deleted')
-//     }
-//   })
-// })
+// DELETE service (switch service status to 'inactive')
+router.delete('/:id', (req, res, next) => {
+  services.findByIdAndUpdate(req.params.id, { status: 'inactive' }, { new: true }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else if (!data) {
+      res.status(400).send('Service not found')
+    } else {
+      res.send('Service deleted')
+    }
+  })
+})
 
 module.exports = router
