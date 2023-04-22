@@ -3,19 +3,19 @@ import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  props: {
-    service: {
-      type: Object,
-      required: true
+  data() {
+    return {
+      services: [],
+      service: {
+        title: '',
+        status: {
+          oneOf: ['Active', 'Inactive']
+        }
+      },
     }
   },
   mounted() {
     this.getServices()
-  },
-  data() {
-    return {
-      services: [] // add this line to set initial value of services to an empty array
-    }
   },
   methods: {
     // abstracted method to get services
@@ -24,14 +24,7 @@ export default {
         this.services = res.data.filter(service => service.status === 'Active')
       })
       window.scrollTo(0, 0)
-    },
-    clearSearch() {
-      // Resets all the variables
-      this.searchBy = ''
-      this.service.title = ''
-
-      this.getEvents()
-    },
+    }
   }
 }
 </script>

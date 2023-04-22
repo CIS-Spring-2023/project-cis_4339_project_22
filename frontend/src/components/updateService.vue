@@ -1,35 +1,36 @@
-<!-- Referred to eventDetails.vue and updateClient.vue -->
+<!-- Referred from updateClient.vue and updateEvent.vue -->
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
+  props: ['id'],
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
     return {
+      events: [],
+      services: [],
       service: {
         title: '',
         status: {
           oneOf: ['Active', 'Inactive']
         }
-    },
-    events: []
-  }
-},
+      }
+    }
+  },
 // Added created() based on eventDetails.vue to call events that the services are associated with
   created() {
     axios.get(`${apiURL}/services/id/${this.$route.params.id}`).then((res) => {
       this.service = res.data
-      /*this.service.title.forEach((e) => {
+      this.service.title.forEach((e) => {
         axios.get(`${apiURL}/events/id/${e}`).then((res) => {
           this.events.push(res.data)
         })
-      })*/
+      })
     })
   },
 
@@ -42,19 +43,26 @@ export default {
       })
     },
     editEvent(eventID) {
-      this.$router.push({ name: 'updateevent', params: { id: eventID } })
+      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     },
+    serviceDelete() {
+      axios.delete(`${apiURL}/services/${this.id}`).then(() => {
+        alert('Service has been deleted.')
+        this.$router.push({ name: 'servicelisteditor' })
+      })
+    }
+  },
 
   // sets validations for the various data properties
   validations() {
     return {
+      services: [],
       service: {
         title: { required },
 	      service: { required }
       }
     }
   }
-}
 }
 </script>
 
@@ -86,12 +94,13 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="service.title"
               />
-              <!--<span class="text-black" v-if="v$.service.title.$error">-->
-              <span class="text-black">
+              <span class="text-black" v-if="v$.service.title.$error">
                 <p
                   class="text-red-700"
+                  v-for="error of v$.service.title.$errors"
+                  :key="error.$uid"
                 >
-                  test test
+                  {{ error.$message }}!
                 </p>
               </span>
             </label>
@@ -121,6 +130,15 @@ export default {
               class="bg-green-700 text-white rounded"
             >
               Update Service
+            </button>
+          </div>
+          <div class="flex justify-between mt-10 mr-20">
+            <button
+              @click="serviceDelete"
+              type="submit"
+              class="bg-red-700 text-white rounded"
+            >
+              Delete Service
             </button>
           </div>
           <div class="flex justify-between mt-10 mr-20">

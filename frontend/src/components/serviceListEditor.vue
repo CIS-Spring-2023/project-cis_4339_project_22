@@ -1,23 +1,22 @@
+<!-- Referred from eventDetails.vue -->
 <script>
-import { userLoginState } from "@/store/userInfo";
+import useVuelidate from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  setup() {
-    const user = userLoginState();
-    return {user};
-  },
   data() {
     return {
       services: [],
+      searchBy: "",
       service: {
         title: '',
         status: {
           oneOf: ['Active', 'Inactive']
         }
       },
-      searchBy: ""
+      events: [],
     }
   },
   mounted() {
@@ -27,13 +26,10 @@ export default {
     handleSubmitForm() {
       let endpoint = ''
       if (this.searchBy === 'Service Title') {
-        endpoint = `services/search/?name=${this.service.title}&searchBy=title`
+        endpoint = `services/search/?title=${this.service.title}&searchBy=title`
       }
-      else if (this.service.status.toLowerCase() === 'active') {
-        endpoint = `services/search/?name=${this.service.title}&searchBy=title&status=active`
-      }
-      else if (this.service.status.toLowerCase() === 'inactive') {
-        endpoint = `services/search/?name=${this.service.title}&searchBy=title&status=inactive`
+      else if (this.service.status.toLowerCase() === 'active' || serviceStatus === 'inactive') {
+        endpoint = `services/search/?status=${serviceStatus}`;
       }
       axios.get(`${apiURL}/${endpoint}`).then((res) => {
         this.services = res.data
