@@ -40,8 +40,8 @@ export default {
         axios
         .post(`${apiURL}/services`, this.service)
         .then(() => {
-          alert('Event has been added.')
-          this.$router.push({ name: 'servicelist' })
+          alert('Service has been added.')
+          this.$router.push({ name: 'servicelisteditor' })
         })
         .catch((error) => {
           console.log(error)
@@ -49,7 +49,7 @@ export default {
       }
     },
     editService(serviceID) {
-      this.$router.push({ name: 'servicelist', params: { id: serviceID } })
+      this.$router.push({ name: 'servicelisteditor', params: { id: serviceID } })
     },
     async updateService() {
       // Checks to see if there are any errors in validation
@@ -85,7 +85,7 @@ export default {
       const serviceID = this.services[serviceID].id;
       axios.delete(`${apiURL}/services/${this.id}`).then(() => {
         alert('Service has been deleted.')
-        this.$router.push({ name: 'servicelist' })
+        this.$router.push({ name: 'servicelisteditor' })
       })
     },
     showSuccessMessage(message) {
