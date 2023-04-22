@@ -40,7 +40,7 @@ export default {
         axios
         .post(`${apiURL}/services`, this.service)
         .then(() => {
-          alert('Event has been added.')
+          alert('Service has been added.')
           this.$router.push({ name: 'servicelist' })
         })
         .catch((error) => {
