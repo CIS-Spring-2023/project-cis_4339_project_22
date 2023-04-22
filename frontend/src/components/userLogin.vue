@@ -24,7 +24,7 @@ export default {
           axios.get(`${apiURL}/user/${this.username}/${this.password}`).then((res) => {
             if (res.data) {
               this.user.isLoggedIn = true; //logged in
-              if (res.data.role == "editor") {
+              if (res.data == "editor") {
                 this.user.editor = true; //editor role
               }
               else {

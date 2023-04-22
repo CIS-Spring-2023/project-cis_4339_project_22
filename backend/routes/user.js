@@ -12,11 +12,15 @@ const { user } = require('../models/models')
 router.get('/:username/:password', (req, res, next) => {
   const salt = "$2a$10$boAxO3xUYcJ34WvJokLeEO";
   const hashedpass = bcrypt.hashSync(req.params.password, salt);
-  user.findOne({ username: req.params.username, password: hashedpass }, (error, data) => {
+  user.findOne({ org: org, username: req.params.username, password: hashedpass }, (error, data) => {
     if (error) {
       return next(error)
-    } else {
-      res.json(data)
+    }
+    else if(data) {
+      res.json(data.role);
+    }
+    else {
+      res.json(null);
     }
   })
 })
