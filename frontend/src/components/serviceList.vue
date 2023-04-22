@@ -4,8 +4,13 @@ import useVuelidate from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { userLoginState } from "@/store/userInfo";
 
 export default {
+  setup() {
+    const user = userLoginState();
+    return {user};
+  },
   data() {
     return {
       events: [],
@@ -49,7 +54,9 @@ export default {
       this.getServices()
     },
     editService(serviceID) {
+      if (this.user.editor) {
         this.$router.push({ name: 'updateservice', params: { id: serviceID } })
+      }
     }
   }
 }
@@ -97,7 +104,6 @@ export default {
           <select
             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             v-model="service.status"
-            v-on:change="handleSubmitForm"
             >
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>

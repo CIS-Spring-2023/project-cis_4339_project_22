@@ -8,8 +8,7 @@ const { services } = require('../models/models')
 
 // GET all services
 router.get('/', (req, res, next) => {
-  // use findOne instead of find to not return array
-  services.find((error, data) => {
+  services.find({ org: org }, (error, data) => {
     if (error) {
       return next(error)
     } else if (!data) {
@@ -23,11 +22,36 @@ router.get('/', (req, res, next) => {
 // GET single service by ID
 router.get('/id/:id', (req, res, next) => {
   // use findOne instead of find to not return array
-  services.findOne({ _id: req.params.id }, (error, data) => {
+  services.findOne({ _id: req.params.id, org: org }, (error, data) => {
     if (error) {
       return next(error)
     } else if (!data) {
       res.status(400).send('Service not found')
+    } else {
+      res.json(data)
+    }
+  })
+})
+
+// GET service based on search query
+// Ex: '...?title=Tutoring&searchBy=title' where 'Tutoring' is the name of the service
+router.get('/search/', (req, res, next) => {
+  const dbQuery = { org: org }
+  switch (req.query.searchBy) {
+    case 'title':
+      // match service name
+      dbQuery.title = { $regex: `${req.query.title}`, $options: 'i' }
+      break
+    case 'status':
+      // match service status
+      dbQuery.status = { $regex: `${req.query.status}`, $options: 'i' }
+      break
+    default:
+      return res.status(400).send('invalid searchBy')
+  }
+  services.find(dbQuery, (error, data) => {
+    if (error) {
+      return next(error)
     } else {
       res.json(data)
     }
