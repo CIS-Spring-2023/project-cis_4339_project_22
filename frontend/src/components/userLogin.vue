@@ -1,6 +1,7 @@
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required, alpha} from '@vuelidate/validators'
 import { userLoginState } from "@/store/userInfo";
-import bcrypt from 'bcryptjs';
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
@@ -14,25 +15,38 @@ export default {
   },
   setup() {
     const user = userLoginState();
-    return {user};
+    return {v$: useVuelidate({ $autoDirty: true }), user};
   },
   methods:{
     async login() {
-      const salt = bcrypt.genSaltSync(10);
-      console.log(salt);
-      axios.get(`${apiURL}/user/${this.username}/${this.password}`).then((res) => {
-        if (res.data) {
-          this.user.isLoggedIn = true; //logged in
-          if (res.data.role == "editor") {
-            this.user.editor = true; //editor role
-          };
-          this.$router.push("/"); //redirect
+      this.v$.$validate().then((valid) => {
+        if (valid) {
+          axios.get(`${apiURL}/user/${this.username}/${this.password}`).then((res) => {
+            if (res.data) {
+              this.user.isLoggedIn = true; //logged in
+              if (res.data.role == "editor") {
+                this.user.editor = true; //editor role
+              }
+              else {
+                this.user.editor = false; //viewer role
+              };
+              this.$router.push("/"); //redirect
+            }
+            else {
+              this.loginError = true;
+            }
+          })
         }
         else {
-          console.log("not found");
           this.loginError = true;
         }
       })
+    }
+  },
+  validations() {
+    return {
+      username: { required, alpha },
+      password: { required, alpha },
     }
   }
 }
@@ -47,6 +61,7 @@ export default {
     <main class="w-100">
       <!-- main content div -->
         <div class="px-10 py-20" style="width:50%; margin-left: 25%;">
+          <form @submit.prevent="login">
           <!-- input 1 -->
           <label class="block">
               <span class="text-gray-700">Username</span>
@@ -71,10 +86,11 @@ export default {
           <div v-if="loginError" style="color: #ff0000">Incorrect Login.</div>
           <!-- submit button -->
           <div class="mt-10">
-            <button class="bg-red-700 text-white rounded" type="submit" v-on:click="login">
+            <button class="bg-red-700 text-white rounded" type="submit">
               Login
             </button>
           </div>
+        </form>
         </div>
     </main>
 </template>
