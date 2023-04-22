@@ -60,7 +60,7 @@ router.put('/update/:id', (req, res, next) => {
 
 // DELETE service (switch service status to 'inactive')
 router.delete('/:id', (req, res, next) => {
-  services.findByIdAndUpdate(req.params.id, { status: 'inactive' }, { new: true }, (error, data) => {
+  services.findByIdAndUpdate(req.params.id, { status: 'Inactive' }, { new: true }, (error, data) => {
     if (error) {
       return next(error)
     } else if (!data) {

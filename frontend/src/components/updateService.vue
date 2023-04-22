@@ -37,7 +37,7 @@ export default {
 // Edited methods for service update
   methods: {
     handleServiceUpdate() {
-      axios.put(`${apiURL}/services/update/${this.id}`, this.service).then(() => {
+      axios.put(`${apiURL}/services/update/${this.$route.params.id}`, this.service).then(() => {
         alert('Update has been saved.')
         this.$router.back()
       })
@@ -46,9 +46,9 @@ export default {
       this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     },
     serviceDelete() {
-      axios.delete(`${apiURL}/services/${this.id}`).then(() => {
+      axios.delete(`${apiURL}/services/${this.$route.params.id}`).then(() => {
         alert('Service has been deleted.')
-        this.$router.push({ name: 'servicelisteditor' })
+        this.$router.push({ name: 'servicelist' })
       })
     }
   },
@@ -111,7 +111,6 @@ export default {
             <label class="block">
               <span class="text-gray-700">Status</span>
               <select v-model="service.status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option value="Blank" selected></option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
