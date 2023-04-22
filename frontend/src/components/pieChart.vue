@@ -1,8 +1,14 @@
 <template>
+  <canvas :id="chartId" width="500" height="500"></canvas>
+</template>
+
+<script>
+import Chart from 'chart.js/auto'
+
+export default {
+  props: ['chartData', 'chartId'],
   mounted() {
-    this.getAttendanceData()
-    console.log('Component mounted.')
-    const ctx = document.getElementById('myChart')
+    const ctx = document.getElementById(this.chartId)
 
     const data = {
       labels: ['77005', '77401', '77094', '77388', '77494'],
@@ -21,6 +27,7 @@
         }
       ]
     }
+
     Chart.defaults.font.size = 20 //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
     const myChart = new Chart(ctx, {
       type: 'pie',
@@ -29,7 +36,6 @@
         maintainAspectRatio: false //option to prevent chart size from changing
       }
     })
-
-    myChart //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
-},
-</template>
+  }
+}
+</script>
