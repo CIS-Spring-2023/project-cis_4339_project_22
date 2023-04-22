@@ -3,10 +3,11 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
 import axios from 'axios';
 import serviceList from '@/components/serviceList.vue';
+const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    return {v$: useVuelidate({ $autoDirty: true }) }
   },
   components: {
     serviceList
@@ -18,16 +19,16 @@ export default {
         title: '',
         status: 'Active' // Changed to a string for simplicity
       },
-      editServiceId: null // Added for tracking the service being edited
+      editserviceID: null // Added for tracking the service being edited
     }
   },
   computed: {
     shouldShowAddButton() {
       // Return false if isEditMode is true, otherwise return true
-      return this.editServiceId === null;
+      return this.editserviceID === null;
     },
     isEditMode() {
-      return this.editServiceId !== null;
+      return this.editserviceID !== null;
     }
   },
   methods: {
@@ -36,54 +37,39 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found in validation, proceed with form submission
       if (isFormCorrect) {
-        try {
-          const response = await axios.post('/api/services', this.service);
-          // Add the created service to the services array
-          this.services.push(response.data);
-          // Reset the form
-          this.resetForm();
-          // Show success message
-          this.showSuccessMessage('Service has been added.')
-        } catch (error) {
-          this.showErrorMessage('Failed to add service. Please try again.');
-        }
+        axios
+        .post(`${apiURL}/services`, this.service)
+        .then(() => {
+          alert('Event has been added.')
+          this.$router.push({ name: 'servicelist' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       }
     },
-    editService(serviceId) {
-      // Set the service data to the form for editing
-      const index = this.services.findIndex(service => service.id === serviceId);
-      // If the serviceId is not found in the services array, return early
-      if (index === -1) {
-        console.error(`Service with id ${serviceId} not found in services array.`);
-        return;
-      }
-      // Set the editServiceId data property to the index of the service being edited
-      this.editServiceId = index;
-      this.service.title = this.services[index].title;
-      this.service.status = this.services[index].status;
+    editService(serviceID) {
+      this.$router.push({ name: 'servicelist', params: { id: serviceID } })
     },
-    async handleUpdateForm() {
-      // Updates the service in the services array
-      if (this.editServiceId !== null) {
-        const editedService = { ...this.service };
-        try {
-          await axios.put(`/api/services/${this.services[this.editServiceId].id}`, editedService);
-          this.services.splice(this.editServiceId, 1, editedService);
-          // Reset the form
+    async updateService() {
+      // Checks to see if there are any errors in validation
+      const isFormCorrect = await this.v$.$validate()
+      // If no errors found. isFormCorrect = True then the form is submitted
+      if (isFormCorrect) {
+        axios
+        .put(`${apiURL}/services/update/${this.id}`, this.service)
+        .then(() => {
           this.resetForm()
-          // Show success message
-          this.showSuccessMessage('Service has been updated.')
-          this.editServiceId = null
-        } catch (error) {
-          this.showErrorMessage('Failed to update service.')
-        }
+          alert('Update has been saved.')
+          this.$router.back()
+        })
       }
     },
     resetForm() {
       // Reset the form data
       this.service.title = ''
       this.service.status = 'Active'
-      this.serviceId = null
+      this.serviceID = null
       // Reset the validation state
       this.v$.$reset()
     },
@@ -91,24 +77,16 @@ export default {
     // Reset the form
     this.resetForm()
     // Set isEditMode to false
-    this.editServiceId = null
+    this.editserviceID = null
     this.isEditMode = false
     },
-    async deleteService(index) {
+    async deleteService() {
       // Get the id of the service being deleted
-      const serviceId = this.services[index].id;
-      try {
-        await axios.delete(`/api/services/${serviceId}`);
-        // Remove the service from the services array
-        this.services.splice(index, 1);
-        // Reset the form
-        this.resetForm()
-      } catch (error) {
-        // Show error message
-        this.showErrorMessage('Failed to delete service.')
-        // Show success message
-        this.showSuccessMessage('Service has been deleted.')
-      }
+      const serviceID = this.services[serviceID].id;
+      axios.delete(`${apiURL}/services/${this.id}`).then(() => {
+        alert('Service has been deleted.')
+        this.$router.push({ name: 'servicelist' })
+      })
     },
     showSuccessMessage(message) {
       console.log('Success:', message)
@@ -129,7 +107,7 @@ export default {
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit service from reloading the page-->
-      <form @submit.prevent="isEditMode ? handleUpdateForm() : handleSubmitForm()">
+      <form @submit.prevent="isEditMode ? updateService() : handleSubmitForm()">
         <!-- grid container -->
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
@@ -163,7 +141,7 @@ export default {
           </button>
       </div>
       <div class="mt-5 grid-cols-2" v-if="isEditMode">
-          <button class="bg-red-700 text-white rounded" type="button" @click="handleUpdateForm()">
+          <button class="bg-red-700 text-white rounded" type="button" @click="updateService()">
             Update
           </button>
           <button class="bg-red-700 text-white rounded" type="button" @click="cancelEditService">
@@ -201,13 +179,14 @@ export default {
               @click="editService(service._id)"
               v-for="service in services"
               :key="service._id"
+              class="cursor-pointer"
             >
               <td class="p-2 text-left">{{ service.title }}</td>
               <td class="p-2 text-left">{{ service.status }}</td>
               <!-- Actions column -->
               <td class="p-4 text-left">
                 <button @click="editService(service._id)" class="mr-2">Edit</button>
-                <button v-if="isEditMode" @click="deleteService(editServiceId)" class="mr-2">Delete</button>
+                <button v-if="isEditMode" @click="deleteService()" class="mr-2">Delete</button>
               </td>
             </tr>
           </tbody>

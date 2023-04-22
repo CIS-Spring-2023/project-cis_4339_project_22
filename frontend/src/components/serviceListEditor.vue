@@ -1,12 +1,23 @@
 <script>
+import { userLoginState } from "@/store/userInfo";
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  props: {
-    service: {
-      type: Object,
-      required: true
+  setup() {
+    const user = userLoginState();
+    return {user};
+  },
+  data() {
+    return {
+      services: [],
+      service: {
+        title: '',
+        status: {
+          oneOf: ['Active', 'Inactive']
+        }
+      },
+      searchBy: ""
     }
   },
   mounted() {
@@ -43,7 +54,9 @@ export default {
       this.getServices()
     },
     editService(serviceID) {
-      this.$router.push({ name: 'updateservice', params: { id: serviceID } })
+      if (this.user.editor) {
+        this.$router.push({ name: 'updateservice', params: { id: serviceID } })
+      }
     }
   }
 }
@@ -141,7 +154,7 @@ export default {
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editService(service.ID)"
+              @click="editService(service._id)"
               v-for="service in services"
               :key="service._id"
               class="cursor-pointer"
