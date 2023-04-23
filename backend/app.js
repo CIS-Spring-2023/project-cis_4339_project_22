@@ -38,7 +38,9 @@ app.use('/clients', require('./routes/clients'))
 app.use('/events', require('./routes/events'))
 app.use('/org', require('./routes/org'))
 // added route for services
-app.use('/services', require('./routes/services'))
+app.use('/service', require('./routes/service'))
+// added route for users
+app.use('/user', require('./routes/user'))
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
