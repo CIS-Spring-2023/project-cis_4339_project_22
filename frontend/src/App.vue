@@ -21,11 +21,6 @@ export default {
       this.user.editor = false;
     }
   },
-  created() {
-    axios.get(`${apiURL}/org`).then((res) => {
-      this.orgName = res.data.name
-    })
-  }
 }
 </script>
 

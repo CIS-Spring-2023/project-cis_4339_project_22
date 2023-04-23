@@ -30,11 +30,6 @@ export default {
       }
     }
   },
-  created() {
-    axios.get(`${apiURL}/org`).then((res) => {
-      this.org = res.data._id
-    })
-  },
   mounted() {
     window.scrollTo(0, 0)
   },
