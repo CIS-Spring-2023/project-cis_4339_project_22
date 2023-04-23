@@ -3,11 +3,16 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 import pieChart from './pieChart.vue'
+import { userLoginState } from "@/store/userInfo";
 const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   components: {
     AttendanceChart,
     pieChart
+  },
+  setup() {
+    const user = userLoginState();
+    return {user};
   },
   data() {
     return {
@@ -73,7 +78,9 @@ export default {
     },
     // method to allow click through table to event details
     editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      if (this.user.isLoggedIn && this.user.editor) {
+        this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      }
     }
   }
 }

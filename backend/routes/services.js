@@ -44,12 +44,13 @@ router.get('/search/', (req, res, next) => {
       break
     case 'status':
       // match service status
-      dbQuery.status = { $regex: `${req.query.status}`, $options: 'i' }
+      dbQuery.status = { $regex: `${req.query.status}`}
       break
     default:
       return res.status(400).send('invalid searchBy')
   }
   services.find(dbQuery, (error, data) => {
+  console.log(dbQuery)
     if (error) {
       return next(error)
     } else {
