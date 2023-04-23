@@ -53,11 +53,17 @@ const routes = [
     props: true,
     component: () => import('../components/eventDetails.vue')
   },
-  // Added a path to serviceList.vue
+  // Added a path to serviceList.vue for viewers to view only active services
   {
     path: '/servicelist',
     name: 'servicelist',
     component: () => import('../components/serviceList.vue')
+  },
+  // serviceListEditor.vue for editors to filter active and inactive services
+  {
+    path: '/servicelisteditor',
+    name: 'servicelisteditor',
+    component: () => import('../components/serviceListEditor.vue')
   },
   // updateService.vue 
   {

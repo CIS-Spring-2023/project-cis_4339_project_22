@@ -23,12 +23,8 @@ export default {
           zip: ''
         },
         description: ''
-      },
-      servicesList: []
+      }
     }
-  },
-  async created() {
-    await this.loadServicesList();
   },
   methods: {
     async handleSubmitForm() {
@@ -46,16 +42,6 @@ export default {
             console.log(error)
           })
       }
-    },
-    loadServicesList() {
-      axios.get(`${apiURL}/services`).then((res) => {
-        const list = res.data;
-        for (let i = 0; i < list.length; i++) {
-          if (list[i].status == 'Active') {
-            this.servicesList.push(list[i]);
-          }
-        }
-      })
     }
   },
   // sets validations for the various data properties
@@ -150,17 +136,56 @@ export default {
           <!-- form field -->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
-            <div v-for="service in servicesList">
-              <label :for="service.title" class="inline-flex items-center">
+            <div>
+              <label for="familySupport" class="inline-flex items-center">
                 <input
                   type="checkbox"
-                  :id="service.title.toLowerCase().split(' ').join('')"
-                  :value="service.title"
+                  id="familySupport"
+                  value="Family Support"
                   v-model="event.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
-                <span class="ml-2">{{ service.title }}</span>
+                <span class="ml-2">Family Support</span>
+              </label>
+            </div>
+            <div>
+              <label for="adultEducation" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="adultEducation"
+                  value="Adult Education"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Adult Education</span>
+              </label>
+            </div>
+            <div>
+              <label for="youthServices" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="youthServices"
+                  value="Youth Services Program"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Youth Services Program</span>
+              </label>
+            </div>
+            <div>
+              <label for="childhoodEducation" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="childhoodEducation"
+                  value="Early Childhood Education"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Early Childhood Education</span>
               </label>
             </div>
           </div>

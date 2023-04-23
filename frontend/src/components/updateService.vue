@@ -1,27 +1,29 @@
-<!-- Referred from updateClient.vue and updateEvent.vue -->
+<!-- Referred to eventDetails.vue and updateClient.vue -->
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  props: ['id'],
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
     return {
-      events: [],
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: '',
-        status: {
-          oneOf: ['Active', 'Inactive']
-        }
-      }
-    }
-  },
+        status: ''
+    },
+    events: []
+  }
+},
 // Added created() based on eventDetails.vue to call events that the services are associated with
   created() {
     axios.get(`${apiURL}/services/id/${this.$route.params.id}`).then((res) => {
@@ -37,32 +39,30 @@ export default {
 // Edited methods for service update
   methods: {
     handleServiceUpdate() {
-      axios.put(`${apiURL}/services/update/${this.$route.params.id}`, this.service).then(() => {
+      axios.put(`${apiURL}/services/update/${this.id}`, this.service).then(() => {
         alert('Update has been saved.')
         this.$router.back()
       })
     },
     editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      this.$router.push({ name: 'updateevent', params: { id: eventID } })
     },
-    serviceDelete() {
-      axios.delete(`${apiURL}/services/${this.$route.params.id}`).then(() => {
-        alert('Service has been deleted.')
-        this.$router.push({ name: 'servicelist' })
-      })
-    }
-  },
 
   // sets validations for the various data properties
   validations() {
     return {
-      services: [],
+      services: [
+        { title: 'Service A', status: 'Active' },
+        { title: 'Service B', status: 'Inactive' },
+        { title: 'Service C', status: 'Active' }
+      ],
       service: {
         title: { required },
 	      service: { required }
       }
     }
   }
+}
 }
 </script>
 
@@ -111,6 +111,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Status</span>
               <select v-model="service.status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="Blank" selected></option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
@@ -133,15 +134,6 @@ export default {
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button
-              @click="serviceDelete"
-              type="submit"
-              class="bg-red-700 text-white rounded"
-            >
-              Delete Service
-            </button>
-          </div>
-          <div class="flex justify-between mt-10 mr-20">
-            <button
               type="reset"
               class="border border-red-700 bg-white text-red-700 rounded"
               @click="$router.back()"
@@ -151,6 +143,62 @@ export default {
           </div>
         </div>
 
+        <hr class="mt-10 mb-10" />
+
+        <!-- Service Event Information -->
+        <div
+          class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
+        >
+          <h2 class="text-2xl font-bold">Events for Service</h2>
+
+          <div class="flex flex-col col-span-2">
+            <table class="min-w-full shadow-md rounded">
+              <thead class="bg-gray-50 text-xl">
+                <tr>
+                  <th class="p-4 text-left">Event Name</th>
+                  <th class="p-4 text-left">Date</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-300">
+                <!-- allow click through to event details -->
+                <tr
+                  @click="editEvent(event._id)"
+                  v-for="event in eventsRegistered"
+                  :key="event._id"
+                >
+                  <td class="p-2 text-left">{{ event.name }}</td>
+                  <td class="p-2 text-left">
+                    {{ formattedDate(event.date) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="flex flex-col">
+            <!-- fixed weird selection duplication bug -->
+            <VueMultiselect
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              v-model="eventsSelected"
+              :options="eventsAll"
+              :custom-label="nameWithDate"
+              :multiple="true"
+              :close-on-select="true"
+              placeholder="Select Events to be added"
+              label="date"
+              track-by="name"
+            />
+            <div class="flex justify-between">
+              <button
+                @click="addToEvent"
+                type="submit"
+                class="mt-5 bg-red-700 text-white rounded"
+              >
+                Add Service to Selected Events
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </main>

@@ -1,5 +1,3 @@
-// nodemon app.js
-
 const express = require('express')
 const mongoose = require('mongoose') //require mongoose library functionaility
 const morgan = require('morgan') // better debugging
@@ -20,7 +18,7 @@ app.use(
 
 // sets up mongoose for the mongoDB connection
 mongoose
-  .connect(process.env.MONGO_URL) // Connects to .env file
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log('Database connection Success!')
   })
