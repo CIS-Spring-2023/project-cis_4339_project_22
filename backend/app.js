@@ -4,7 +4,7 @@ const morgan = require('morgan') // better debugging
 
 const cors = require('cors')
 // allow using a .env file
-require('dotenv').config(); //require the dotenv
+require('dotenv').config() //require the dotenv
 
 // creates a new instance of express application
 const app = express()

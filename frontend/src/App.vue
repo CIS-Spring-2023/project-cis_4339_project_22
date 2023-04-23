@@ -18,7 +18,6 @@ export default {
   methods: {
     logout() {
       this.user.isLoggedIn = false;
-      this.user.editor = false;
     }
   },
   created() {
