@@ -2,36 +2,64 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
-import pieChart from './pieChart.vue'
-
+import barChart from './barChart.vue'
+import Chart from 'chart.js/auto'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   components: {
     AttendanceChart,
-    pieChart
+    barChart
   },
   data() {
     return {
       recentEvents: [],
       labels: [],
       chartData: [],
-      pieChartDataLabels: [],
-      pieChartData: [],
       loading: false,
       error: null
     }
   },
-  async mounted() {
-    this.loading = true
-    await this.getAttendanceData()
-    await this.getPieChartData()
-    this.loading = false
+  //config and set up for piechart from https://www.chartjs.org/docs/latest/charts/doughnut.html
+  mounted() {
+    this.getAttendanceData()
+    console.log('Component mounted.')
+    const ctx = document.getElementById('myChart')
+
+    const data = {
+      labels: ['77005', '77401', '77094', '77388', '77494'],
+      datasets: [
+        {
+          label: 'My First Dataset',
+          data: [11, 4, 14, 3, 9],
+          backgroundColor: [
+            'rgb(255, 99, 100)',
+            'rgb(151, 33, 210)',
+            'rgb(255, 199, 0)',
+            'rgb(33, 210, 68)',
+            'rgb(33, 39, 210)'
+          ],
+          hoverOffset: 4
+        }
+      ]
+    }
+    Chart.defaults.font.size = 20 //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
+    const myChart = new Chart(ctx, {
+      type: 'pie',
+      data: data,
+      options: {
+        maintainAspectRatio: false //option to prevent chart size from changing
+      }
+    })
+
+    myChart //method to fix "myChart is assigned but never used", from user Simon Suh https://www.youtube.com/watch?v=aw8d2f3xfPA @5:50.
   },
+
   methods: {
     async getAttendanceData() {
       try {
         this.error = null
+        this.loading = true
         const response = await axios.get(`${apiURL}/events/attendance`)
         this.recentEvents = response.data
         this.labels = response.data.map(
@@ -59,11 +87,7 @@ export default {
           }
         }
       }
-    },
-    async getPieChartData() {
-      const response = await axios.get(`${apiURL}/clients/zipcodecount`)
-      this.pieChartDataLabels = await response.data.map((item) => item._id)
-      this.pieChartData = await response.data.map((item) => item.count)
+      this.loading = false
     },
     formattedDate(datetimeDB) {
       const dt = DateTime.fromISO(datetimeDB, {
@@ -113,12 +137,46 @@ export default {
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
+              <tr>
+                <td>FITP</td>
+                <td>3/9/2023</td>
+                <td>15</td>
+              </tr>
+              <tr>
+                <td>Tutoring</td>
+                <td>3/10/2023</td>
+                <td>19</td>
+              </tr>
+              <tr>
+                <td>Houston Conference</td>
+                <td>3/14/2023</td>
+                <td>33</td>
+              </tr>
+              <tr>
+                <td>Career Fair</td>
+                <td>3/26/2023</td>
+                <td>29</td>
+              </tr>
+              <tr>
+                <td>Cloudathon</td>
+                <td>4/25/2023</td>
+                <td>40</td>
+              </tr>
             </tbody>
           </table>
           <!-- breaks added to add more distance between chart and table -->
           <br />
+          <!--Bar Chart Component-->
+          <div>
+            <barChart />
+          </div>
           <br />
           <!--canvas chart element-->
+          <!--taken from barChart.vue-->
+          <div class="shadow-lg rounded-lg overflow-hidden">
+            <!--Set width and height to 500-->
+            <canvas id="myChart" width="500" height="500"></canvas>
+          </div>
 
           <div>
             <AttendanceChart
@@ -127,15 +185,6 @@ export default {
               :chart-data="chartData"
             >
             </AttendanceChart>
-<br />
-<br />
-          <!-- Pie Chart-->
-          <div class="shadow-lg rounded-lg overflow-hidden">
-              <pie-chart v-if="!loading && !error" :chartDataLabels="pieChartDataLabels" :chartData="pieChartData">
-              </pie-chart>
-          </div>
-
-
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
               <p
@@ -146,16 +195,18 @@ export default {
             </div>
             <!-- End of loading animation -->
             <!-- Start of error alert -->
-            <div class="mt-12 bg-red-50" v-if="error">
-            <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800">
-              {{ error.title }}
-            </h3>
-            <p class="p-4 text-lg font-bold text-red-900">
-              {{ error.message }}
-            </p>
-            </div>
+
+            <!-- This portion of the code is commented out for Sprint 2 due to backend not being connected-->
+            <!-- <div class="mt-12 bg-red-50" v-if="error"> -->
+
+            <!-- <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800"> -->
+            <!-- {{ error.title }} -->
+            <!-- </h3> -->
+            <!-- <p class="p-4 text-lg font-bold text-red-900"> -->
+            <!-- {{ error.message }} -->
+            <!-- </p> -->
+            <!-- </div> -->
             <!-- End of error alert -->
-          
           </div>
         </div>
       </div>
