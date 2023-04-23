@@ -6,14 +6,52 @@ const org = process.env.ORG
 // importing data model schemas
 const { services } = require('../models/models')
 
-// GET single service by ID
-router.get('/id/:id', (req, res, next) => {
-  // use findOne instead of find to not return array
-  services.findOne({ _id: req.params.id }, (error, data) => {
+// GET all services
+router.get('/', (req, res, next) => {
+  services.find({ org: org }, (error, data) => {
     if (error) {
       return next(error)
     } else if (!data) {
       res.status(400).send('Service not found')
+    } else {
+      res.json(data)
+    }
+  })
+})
+
+// GET single service by ID
+router.get('/id/:id', (req, res, next) => {
+  // use findOne instead of find to not return array
+  services.findOne({ _id: req.params.id, org: org }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else if (!data) {
+      res.status(400).send('Service not found')
+    } else {
+      res.json(data)
+    }
+  })
+})
+
+// GET service based on search query
+// Ex: '...?title=Tutoring&searchBy=title' where 'Tutoring' is the name of the service
+router.get('/search/', (req, res, next) => {
+  const dbQuery = { org: org }
+  switch (req.query.searchBy) {
+    case 'title':
+      // match service name
+      dbQuery.title = { $regex: `${req.query.title}`, $options: 'i' }
+      break
+    case 'status':
+      // match service status
+      dbQuery.status = { $regex: `${req.query.status}`, $options: 'i' }
+      break
+    default:
+      return res.status(400).send('invalid searchBy')
+  }
+  services.find(dbQuery, (error, data) => {
+    if (error) {
+      return next(error)
     } else {
       res.json(data)
     }
@@ -44,17 +82,17 @@ router.put('/update/:id', (req, res, next) => {
   })
 })
 
-// DELETE service should be SOFT deletedz
-// router.delete('/:id', (req, res, next) => {
-//   services.findByIdAndDelete(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else if (!data) {
-//       res.status(400).send('Service not found')
-//     } else {
-//       res.send('Service deleted')
-//     }
-//   })
-// })
+// DELETE service (switch service status to 'inactive')
+router.delete('/:id', (req, res, next) => {
+  services.findByIdAndUpdate(req.params.id, { status: 'Inactive' }, { new: true }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else if (!data) {
+      res.status(400).send('Service not found')
+    } else {
+      res.send('Service deleted')
+    }
+  })
+})
 
 module.exports = router

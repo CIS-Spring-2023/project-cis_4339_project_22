@@ -123,20 +123,8 @@ export default {
             </li>
 
             <!-- Installed Language Features to see code in color. List of Services for viewers -->
-            <li v-if="user.isLoggedIn && !user.editor">
+            <li v-if="user.isLoggedIn">
               <router-link to="/servicelist">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >format_list_bulleted</span
-                >
-                List of Services
-              </router-link>
-            </li>
-
-            <!-- List of Services for editors -->
-            <li v-if="user.editor && user.isLoggedIn">
-              <router-link to="/servicelisteditor">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"

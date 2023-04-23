@@ -4,7 +4,6 @@ import { required } from '@vuelidate/validators'
 import axios from 'axios'
 import { DateTime } from 'luxon'
 const apiURL = import.meta.env.VITE_ROOT_API
-
 export default {
   props: ['id'],
   setup() {
@@ -26,11 +25,13 @@ export default {
         },
         description: '',
         attendees: []
-      }
+      },
+      servicesList: []
     }
   },
-  created() {
-    axios.get(`${apiURL}/events/id/${this.$route.params.id}`).then((res) => {
+  async created() {
+    await this.loadServicesList();
+    await axios.get(`${apiURL}/events/id/${this.$route.params.id}`).then((res) => {
       this.event = res.data
       this.event.date = this.formattedDate(this.event.date)
       this.event.attendees.forEach((e) => {
@@ -63,6 +64,16 @@ export default {
       axios.delete(`${apiURL}/events/${this.id}`).then(() => {
         alert('Event has been deleted.')
         this.$router.push({ name: 'findevents' })
+      })
+    },
+    loadServicesList() {
+      axios.get(`${apiURL}/services`).then((res) => {
+        const list = res.data;
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].status == 'Active') {
+            this.servicesList.push(list[i]);
+          }
+        }
       })
     }
   },
@@ -157,56 +168,17 @@ export default {
           <!-- form field -->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
-            <div>
-              <label for="familySupport" class="inline-flex items-center">
+            <div v-for="service in servicesList">
+              <label :for="service.title" class="inline-flex items-center">
                 <input
                   type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
+                  :id="service.title.toLowerCase().split(' ').join('')"
+                  :value="service.title"
                   v-model="event.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
+                <span class="ml-2">{{ service.title }}</span>
               </label>
             </div>
           </div>
