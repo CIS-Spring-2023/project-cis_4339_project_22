@@ -61,6 +61,22 @@ router.get('/search', (req, res, next) => {
   })
 })
 
+// GET zipcode and zipcode count
+router.get('/zipcodecount', (req, res, next) => {
+  // aggregate
+  clients.aggregate([
+      {"$match" : { orgs : {"$in" : [org]} } },
+      {"$group" : {_id:"$address.zip", count:{$sum:1}}}
+    ],
+    (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        res.json(data)
+      }
+  })
+})
+
 // GET lookup by phone, verify org membership on frontend
 router.get('/lookup/:phoneNumber', (req, res, next) => {
   clients.findOne(
