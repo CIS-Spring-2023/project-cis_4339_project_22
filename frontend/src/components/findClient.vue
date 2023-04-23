@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import { userLoginState } from "@/store/userInfo";
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -12,6 +13,10 @@ export default {
       lastName: '',
       phoneNumber: ''
     }
+  },
+  setup() {
+    const user = userLoginState();
+    return {user};
   },
   created() {
     this.getClients()
@@ -46,7 +51,9 @@ export default {
       this.getClients()
     },
     editClient(clientID) {
-      this.$router.push({ name: 'updateclient', params: { id: clientID } })
+      if (this.user.editor) {
+        this.$router.push({ name: 'updateclient', params: { id: clientID } })
+      }
     }
   }
 }
