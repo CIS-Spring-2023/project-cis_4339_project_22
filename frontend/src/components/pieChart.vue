@@ -1,41 +1,47 @@
 <template>
-  <canvas :id="chartId" width="500" height="500"></canvas>
+  <canvas ref="pieChart" width="500" height="500"></canvas>
 </template>
 
 <script>
 import Chart from 'chart.js/auto'
 
 export default {
-  props: ['chartData', 'chartId'],
+  props: {
+    chartDataLabels: {
+      type: Array
+    },
+    chartData: {
+      type: Array
+    }
+  },
   mounted() {
-    const ctx = document.getElementById(this.chartId)
-
+    const backgroundColor = this.chartData.map(() => this.getColor())
     const data = {
-      labels: ['77005', '77401', '77094', '77388', '77494'],
+      labels: this.chartDataLabels,
       datasets: [
         {
           label: 'My First Dataset',
-          data: [11, 4, 14, 3, 9],
-          backgroundColor: [
-            'rgb(255, 99, 100)',
-            'rgb(151, 33, 210)',
-            'rgb(255, 199, 0)',
-            'rgb(33, 210, 68)',
-            'rgb(33, 39, 210)'
-          ],
+          data: this.chartData,
+          backgroundColor: backgroundColor,
           hoverOffset: 4
         }
       ]
     }
 
     Chart.defaults.font.size = 20 //code for chart.js font size https://www.chartjs.org/docs/latest/general/fonts.html
-    const myChart = new Chart(ctx, {
+    const myChart = new Chart(this.$refs.pieChart, {
       type: 'pie',
       data: data,
       options: {
         maintainAspectRatio: false //option to prevent chart size from changing
       }
     })
+  },
+  methods: {
+    getColor() {
+      let channel = () => Math.random() * 255
+      return `rgba(${channel()}, ${channel()}, ${channel()}, 0.2)`
+    }
   }
 }
 </script>

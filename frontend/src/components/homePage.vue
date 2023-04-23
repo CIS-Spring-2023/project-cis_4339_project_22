@@ -16,18 +16,22 @@ export default {
       recentEvents: [],
       labels: [],
       chartData: [],
+      pieChartDataLabels: [],
+      pieChartData: [],
       loading: false,
       error: null
     }
   },
-  mounted() {
-    this.getAttendanceData()
+  async mounted() {
+    this.loading = true
+    await this.getAttendanceData()
+    await this.getPieChartData()
+    this.loading = false
   },
   methods: {
     async getAttendanceData() {
       try {
         this.error = null
-        this.loading = true
         const response = await axios.get(`${apiURL}/events/attendance`)
         this.recentEvents = response.data
         this.labels = response.data.map(
@@ -55,7 +59,11 @@ export default {
           }
         }
       }
-      this.loading = false
+    },
+    async getPieChartData() {
+      const response = await axios.get(`${apiURL}/clients/zipcodecount`)
+      this.pieChartDataLabels = await response.data.map((item) => item._id)
+      this.pieChartData = await response.data.map((item) => item.count)
     },
     formattedDate(datetimeDB) {
       const dt = DateTime.fromISO(datetimeDB, {
@@ -121,7 +129,11 @@ export default {
             </AttendanceChart>
 <br />
 <br />
-          
+          <!-- Pie Chart-->
+          <div class="shadow-lg rounded-lg overflow-hidden">
+              <pie-chart v-if="!loading && !error" :chartDataLabels="pieChartDataLabels" :chartData="pieChartData">
+              </pie-chart>
+          </div>
 
 
             <!-- Start of loading animation -->
@@ -143,12 +155,6 @@ export default {
             </p>
             </div>
             <!-- End of error alert -->
-
-            <!-- Pie Chart-->
-          <div class="shadow-lg rounded-lg overflow-hidden">
-              <pie-chart :chart-data="chartData" chart-id="myPieChart">
-              </pie-chart>
-          </div>
           
           </div>
         </div>
