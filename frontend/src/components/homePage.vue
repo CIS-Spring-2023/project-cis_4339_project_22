@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 import pieChart from './pieChart.vue'
-import { userLoginState } from "@/store/userInfo";
+import { userLoginState } from '@/store/userInfo';
 const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   components: {
