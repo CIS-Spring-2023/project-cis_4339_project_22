@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 import pieChart from './pieChart.vue'
-import Chart from 'chart.js/auto'
+
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -20,7 +20,9 @@ export default {
       error: null
     }
   },
-
+  mounted() {
+    this.getAttendanceData()
+  },
   methods: {
     async getAttendanceData() {
       try {
@@ -103,31 +105,6 @@ export default {
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
-              <tr>
-                <td>FITP</td>
-                <td>3/9/2023</td>
-                <td>15</td>
-              </tr>
-              <tr>
-                <td>Tutoring</td>
-                <td>3/10/2023</td>
-                <td>19</td>
-              </tr>
-              <tr>
-                <td>Houston Conference</td>
-                <td>3/14/2023</td>
-                <td>33</td>
-              </tr>
-              <tr>
-                <td>Career Fair</td>
-                <td>3/26/2023</td>
-                <td>29</td>
-              </tr>
-              <tr>
-                <td>Cloudathon</td>
-                <td>4/25/2023</td>
-                <td>40</td>
-              </tr>
             </tbody>
           </table>
           <!-- breaks added to add more distance between chart and table -->
@@ -144,11 +121,7 @@ export default {
             </AttendanceChart>
 <br />
 <br />
-          <!-- Pie Chart-->
-          <div class="shadow-lg rounded-lg overflow-hidden">
-              <pie-chart :chart-data="chartData" chart-id="myPieChart">
-              </pie-chart>
-          </div>
+          
 
 
             <!-- Start of loading animation -->
@@ -161,18 +134,22 @@ export default {
             </div>
             <!-- End of loading animation -->
             <!-- Start of error alert -->
-
-            <!-- This portion of the code is commented out for Sprint 2 due to backend not being connected-->
-            <!-- <div class="mt-12 bg-red-50" v-if="error"> -->
-
-            <!-- <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800"> -->
-            <!-- {{ error.title }} -->
-            <!-- </h3> -->
-            <!-- <p class="p-4 text-lg font-bold text-red-900"> -->
-            <!-- {{ error.message }} -->
-            <!-- </p> -->
-            <!-- </div> -->
+            <div class="mt-12 bg-red-50" v-if="error">
+            <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800">
+              {{ error.title }}
+            </h3>
+            <p class="p-4 text-lg font-bold text-red-900">
+              {{ error.message }}
+            </p>
+            </div>
             <!-- End of error alert -->
+
+            <!-- Pie Chart-->
+          <div class="shadow-lg rounded-lg overflow-hidden">
+              <pie-chart :chart-data="chartData" chart-id="myPieChart">
+              </pie-chart>
+          </div>
+          
           </div>
         </div>
       </div>
