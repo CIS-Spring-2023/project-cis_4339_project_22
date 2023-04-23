@@ -40,3 +40,6 @@ Editor Role: username: ``editor`` - password: ``password``
 
 Viewer Role: username: ``viewer`` - password: ``password``
 
+## API Documentation
+API Documentation Link:
+https://documenter.getpostman.com/view/27053458/2s93Y5PKmf
