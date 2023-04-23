@@ -137,14 +137,12 @@ const serviceDataSchema = new Schema(
       type: String,
       required: true
     },
-    service: {
-      title: {
-        type: String,
-        required: true
-      },
-      status: {
-        type: String
-      }
+    title: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String
     },
   },
   {
