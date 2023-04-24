@@ -17,7 +17,7 @@ Setup a .env file with the following variables: MONGO_URL, PORT and ORG
 
     mongodb+srv://4339group22:lindner@4339group22cluster.oxqlqta.mongodb.net/DataPlatformProject
     PORT=3000
-    ORG="300"
+    ORG="6439c6736be20c13801a39a1"
 
 ### Compiles and hot-reloads for development
 
