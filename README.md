@@ -43,3 +43,6 @@ Viewer Role: username: ``viewer`` - password: ``password``
 ## API Documentation
 API Documentation Link:
 https://documenter.getpostman.com/view/27053458/2s93Y5PKmf
+
+## Cloud Deployment
+https://green-forest-0fdc36110.3.azurestaticapps.net/
