@@ -16,7 +16,7 @@ Make sure you have a collection named 'org' in your database that contains at le
 
 Setup a .env file with the following variables: MONGO_URL, PORT and ORG
 
-    mongodb+srv://4339group22:lindner@4339group22cluster.oxqlqta.mongodb.net/DataPlatformProject
+    MONGO_URL=mongodb+srv://4339group22:lindner@4339group22cluster.oxqlqta.mongodb.net/DataPlatformProject
     PORT=3000
     ORG="6439c6736be20c13801a39a1"
 
